@@ -1,6 +1,6 @@
 <?php
 
-    require "password.php";
+    require "passwords.php";
 
     $config = array();
     
