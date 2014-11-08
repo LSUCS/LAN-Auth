@@ -6,3 +6,13 @@ db:
   password:
   dialect: mysql
   logging: false
+log:
+  console:
+    level: debug
+  file:
+    silent: true
+    level: debug
+    filename: console.log
+    maxsize: 3000000
+    maxFiles: 10
+    json: false

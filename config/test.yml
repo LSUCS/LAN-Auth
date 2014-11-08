@@ -2,3 +2,6 @@ db:
   username: root
   storage: ":memory:"
   dialect: sqlite
+log:
+  console:
+    silent: true

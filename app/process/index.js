@@ -1,5 +1,6 @@
 var _       = require("lodash");
 var when    = require("when");
+var log     = require("../log");
 
 var models        = require("../models");
 var deviceManager = require("./device-manager");
@@ -19,10 +20,12 @@ function processAuths(auths) {
             .then(function () {
               //On success, add the device to the auth
               return auth.addDevice(device);
-              //TODO: logging
+            })
+            .then(function () {
+              log.info("Authenticated user %s with device %s:%s", auth.ip, device.host, device.port);
             })
             .catch(function (err) {
-              //TODO: logging
+              log.error(err);
             });
         });
       });
@@ -30,6 +33,7 @@ function processAuths(auths) {
 }
 
 function process() {
+  log.profile("Auth Process");
   return getLan()
     .then(function (lan) {
       //Retrieve all auths for the current LAN
@@ -37,5 +41,8 @@ function process() {
         where: { lan: lan }
       });
     })
-    .then(processAuths);
+    .then(processAuths)
+    .then(function () {
+      log.profile("Auth Process");
+    });
 }

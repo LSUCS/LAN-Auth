@@ -1,0 +1,5 @@
+log:
+  console:
+    level: warn
+  file:
+    silent: false
