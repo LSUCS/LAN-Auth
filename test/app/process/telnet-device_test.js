@@ -32,7 +32,9 @@ describe("TelnetDevice", function () {
 
   it("should reject on error", function (done) {
     server.close(function () {
-      device.exec("test").catch(done);
+      device.exec("test").catch(function () {
+        done()
+      });
     });
   });
 

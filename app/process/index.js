@@ -19,6 +19,10 @@ function processAuths(auths) {
             .then(function () {
               //On success, add the device to the auth
               return auth.addDevice(device);
+              //TODO: logging
+            })
+            .catch(function (err) {
+              //TODO: logging
             });
         });
       });

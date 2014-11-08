@@ -40,4 +40,13 @@ describe("DeviceManager", function () {
     }, "192.168.0.50");
   });
 
+  it("should reject on telnet issues", function (done) {
+    deviceManager.authenticate({
+      host: "127.0.0.1",
+      port: "80"
+    }).catch(function () {
+      done();
+    });
+  });
+
 });

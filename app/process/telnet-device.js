@@ -35,27 +35,25 @@ TelnetDevice.prototype._init = function () {
  */
 TelnetDevice.prototype._bind = function () {
   var self = this;
+
+  var reject = function (err) {
+    err = err || new Error("Telnet Connection Error");
+    self._connected = false;
+    self._connecting = false;
+    self._setRejected(err);
+  };
+
   //On success, resolve the ready promise
   this._conn.on("ready", function () {
     self._connected = true;
     self._connecting = false;
     self._setReady(self._conn);
   });
-  //TODO: error handling
-  this._conn.on("error", function (err) {
-  });
-  //On timeout, reject the ready promise
-  this._conn.on("timeout", function () {
-    self._connected = false;
-    self._connecting = false;
-    self._setRejected();
-  });
-  //On close, reject the ready promise
-  this._conn.on("close", function () {
-    self._connected = false;
-    self._connecting = false;
-    self._setRejected();
-  });
+  
+  //On error, reject
+  this._conn.on("error", reject);
+  this._conn.on("timeout", reject);
+  this._conn.on("close", reject);
 };
 
 /**

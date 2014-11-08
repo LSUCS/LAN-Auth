@@ -58,19 +58,46 @@ describe("Processor", function () {
       lan: "48"
     };
     models.Authentication.create(data)
-    .then(process)
-    .then(function () {
-      return models.Authentication.find({
-        where: data
+      .then(process)
+      .then(function () {
+        return models.Authentication.find({
+          where: data
+        });
+      })
+      .then(function (auth) {
+        return auth.getDevices();
+      })
+      .then(function (devices) {
+        expect(devices).to.not.be.empty;
+        done();
       });
-    })
-    .then(function (auth) {
-      return auth.getDevices();
-    })
-    .then(function (devices) {
-      expect(devices).to.not.be.empty;
-      done();
-    });
   });
+
+  it("should still process other devices if one errors", function (done) {
+    var deviceData = {
+      host: "127.0.0.1",
+      port: 80,
+      name: "server2"
+    };
+    var authData = {
+      ip: "192.168.0.1",
+      lan: "48"
+    };
+    models.Device.create(deviceData)
+      .then(function () {
+        return models.Authentication.create(authData);
+      })
+      .then(process)
+      .then(function () {
+        return models.Authentication.find({ where: authData })
+      })
+      .then(function (auth) {
+        return auth.getDevices();
+      })
+      .then(function (devices) {
+        expect(devices).to.have.length(1);
+        done();
+      });
+  })
 
 });
