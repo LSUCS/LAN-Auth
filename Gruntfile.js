@@ -1,4 +1,8 @@
 var makeTelnetServer = require("./test/lib/make-telnet-server");
+var connect          = require("connect");
+var httpProxy        = require("http-proxy");
+var serveStatic      = require("serve-static");
+var liveReload       = require("connect-livereload");
 
 module.exports = function (grunt) {
 
@@ -34,12 +38,16 @@ module.exports = function (grunt) {
         }
       }
     },
-    connect: {
+    nodemon: {
       dev: {
+        script: "app/app.js"
+      }
+    },
+    concurrent: {
+      dev: {
+        tasks: ["serve", "nodemon", "watch:src"],
         options: {
-          port: 8000,
-          base: "./public/build",
-          livereload: 9000
+          logConcurrentOutput: true
         }
       }
     },
@@ -62,12 +70,28 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-connect");
   grunt.loadNpmTasks("grunt-contrib-less");
   grunt.loadNpmTasks("grunt-autoprefixer");
+  grunt.loadNpmTasks("grunt-nodemon");
+  grunt.loadNpmTasks("grunt-concurrent");
+
+  grunt.registerTask("serve", function () {
+    this.async();
+    var server = connect();
+    var proxy  = httpProxy.createProxyServer({ target: "http://localhost:3000" });
+    proxy.on("error", function (err) {
+      grunt.log.error(err);
+    });
+    server.use("/api", function (req, res) {
+      proxy.web(req, res);
+    });
+    server.use(liveReload({ port: 9000 }));
+    server.use(serveStatic("public/build"));
+    server.listen(8000);
+  });
 
   grunt.registerTask("build", ["clean:build", "browserify:dev", "less:dev", "autoprefixer:dev", "copy:build"]);
-  grunt.registerTask("default", ["connect:dev", "watch:src"]);
+  grunt.registerTask("default", ["concurrent:dev"]);
 
   grunt.registerTask("telnet", function () {
     this.async();
