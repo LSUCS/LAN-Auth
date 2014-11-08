@@ -4,3 +4,4 @@ node_modules
 config/local-*.yml
 config/local.yml
 reports
+public/build
