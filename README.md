@@ -28,7 +28,7 @@ This app is responsible for authenticating users at the LSUCS LAN parties. It is
 
 ## Deploying
 
-The app is managed by Phusion Passenger running on Wheatley behind Nginx.
+The app is managed by Phusion Passenger running on Wheatley behind Nginx. Static files are served by Nginx.
 
 Deployment is done using TJs [deploy](https://github.com/tj/deploy) shell script. How to install ```deploy``` globally (since the documentation is terrible):
 
@@ -40,3 +40,32 @@ make install
 ```
 
 You can then deploy the app to Wheatley by typing ```deploy production```. Remember you must be inside the LAN network in order to deploy. The deploy script can be found in _deploy.conf_.
+
+
+## Production Setup
+
+If the app ever needs reconfiguring for production (either a new server or a fresh install on Wheatley) the following needs to be done:
+
+1. Install Phusion Passenger (for Nginx - not standalone), NVM (NodeJS Version Manager) and Git
+1. Install NodeJS using NVM and set the default version
+1. Configure the Passenger + Nginx like so:
+  ```
+  server {
+    server_name 192.168.0.25;
+    root /var/www/lan-auth/current/public/build;
+
+    # Redirect all unfound files to the app
+    error_page 404 /;
+
+    # Passenger setup
+    passenger_enabled on;
+    passenger_app_type node;
+    passenger_base_uri /api;
+    passenger_app_root /var/www/lan-auth/current/;
+    passenger_startup_file app/app.js;
+  }
+  ```
+1. Create the folder /var/www/lan-auth and ensure the www-data user has full access
+1. Ensure your user account is in the www-data group
+1. __From your computer__: Run ```deploy production setup```
+1. If all goes well this should setup the app on the server. You can then deploy as normal (```deploy production```)
