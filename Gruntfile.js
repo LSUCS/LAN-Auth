@@ -1,22 +1,12 @@
-var telnet = require("telnet");
+var makeTelnetServer = require("./test/lib/make-telnet-server");
 
 module.exports = function (grunt) {
 
-
   grunt.registerTask("telnet", function () {
     this.async();
-    var server = telnet.createServer(function (client) {
-      client.do.transmit_binary();
-      client.do.window_size();
-
-      client.on("data", function (b) {
-        client.write("ok\n");
-        client.write("# ");
-        console.log(b.toString());
-      });
-      client.write("# ");
+    makeTelnetServer().then(function (server) {
+      console.log("Telnet server started at", server.address().address + ":" + server.address().port);
     });
-    server.listen(8081);
   });
 
 };
