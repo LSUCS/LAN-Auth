@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var app = express();
 
 app.use(bodyParser.json());
+app.use(express.static(__dirname + "/../public/build"));
 
 var server = app.listen(3000, function () {
   var address = server.address();

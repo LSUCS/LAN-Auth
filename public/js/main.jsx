@@ -12,7 +12,7 @@ var App          = require("./components/app.jsx");
 window.React = React;
 
 React.renderComponent((
-  <Routes location="hash">
+  <Routes location="history">
     <Route name="app" path="/" handler={App}>
     </Route>
   </Routes>
