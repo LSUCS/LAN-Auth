@@ -1,2 +1,5 @@
 *.log
-passwords.php
+node_modules
+.DS_STORE
+config/local-*.yml
+reports

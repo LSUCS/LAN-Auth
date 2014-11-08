@@ -1,0 +1,40 @@
+{
+  "name": "lan-auth",
+  "version": "1.0.0",
+  "description": "LSUCS LAN Authentication System",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LSUCS/LAN-Auth.git"
+  },
+  "author": "Oliver Woodings",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LSUCS/LAN-Auth/issues"
+  },
+  "homepage": "https://github.com/LSUCS/LAN-Auth",
+  "dependencies": {
+    "config": "^1.7.0",
+    "js-yaml": "^3.2.2",
+    "lodash": "^2.4.1",
+    "mysql": "^2.5.3",
+    "request": "^2.47.0",
+    "sequelize": "^2.0.0-rc2",
+    "telnet-client": "0.0.7",
+    "when": "^3.5.2",
+    "winston": "^0.8.3"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "chai": "^1.9.2",
+    "grunt": "^0.4.5",
+    "mocha": "^2.0.1",
+    "mocha-spec-cov": "0.0.3",
+    "sinon": "^1.11.1",
+    "sinon-chai": "^2.6.0",
+    "telnet": "0.0.1"
+  }
+}

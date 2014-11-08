@@ -1,0 +1,5 @@
+--recursive
+--require test/setup
+--reporter mocha-spec-cov
+--require blanket
+test/**/*_test.js
