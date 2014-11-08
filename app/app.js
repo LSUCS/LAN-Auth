@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 var app = express();
 
 app.use(bodyParser.json());
-app.use("/", function (req, res) {
+app.use("/api", function (req, res) {
   res.json({ yep: "its working" });
 });
 
