@@ -1,3 +1,4 @@
 db:
-  host: 127.0.0.1
-  username: travis
+  username: root
+  storage: ":memory:"
+  dialect: sqlite

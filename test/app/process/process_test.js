@@ -39,15 +39,17 @@ describe("Processor", function () {
     server.onData(function (data) {
       expect(data).to.equal(commands[0]);
       commands.shift();
-      if (commands.length === 0) {
-        done();
-      }
     });
     models.Authentication.create({
       ip: "192.168.0.1",
       lan: "48"
     })
-    .then(process);
+    .then(process)
+    .then(function () {
+      if (commands.length === 0) {
+        done();
+      }
+    });
   });
 
   it("should mark the device as authenticated", function (done) {

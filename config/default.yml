@@ -4,4 +4,5 @@ db:
   database: lan-auth
   username: root
   password:
+  dialect: mysql
   logging: false
