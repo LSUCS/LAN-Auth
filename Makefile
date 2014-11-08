@@ -24,3 +24,6 @@ clean:
 
 bootstrap:
 	npm install
+
+build:
+	./node_modules/.bin/grunt build
