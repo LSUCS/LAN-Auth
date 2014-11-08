@@ -1,10 +1,13 @@
-.PHONY: test watch coverage open-coverage start
+.PHONY: test watch coverage open-coverage start prod-restart bootstrap
 
 test:
-	mocha
+	./node_modules/.bin/mocha
 
 start:
 	nodemon app/app.js
+
+prod-restart:
+	mkdir -p tmp && touch tmp/restart.txt
 
 coverage: clean
 	mocha -R html-cov > reports/coverage.html

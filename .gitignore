@@ -5,3 +5,4 @@ config/local-*.yml
 config/local.yml
 reports
 public/build
+tmp
