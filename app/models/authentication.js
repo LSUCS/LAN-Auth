@@ -15,6 +15,10 @@ var Authentication = sequelize.define("Authentication", {
     type: DataTypes.STRING,
     allowNull: false,
     unique: "authIndex"
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   instanceMethods: {

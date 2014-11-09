@@ -1,5 +1,6 @@
 var expect = require("chai").expect;
 var sinon  = require("sinon");
+var _      = require("lodash");
 
 var models = require("../../app/models");
 var sequelize = require("../../app/models/sequelize");
@@ -16,13 +17,17 @@ describe("Models", function () {
   describe("Authentication", function () {
 
     it("should require ip field", function (done) {
-      models.Authentication.create({ lan: "48" }).catch(function () {
+      models.Authentication.create({ lan: "48", username: "user" }).catch(function (err) {
+        var err = _.findWhere(err.errors, { path: "ip" });
+        expect(err).to.exist;
         done();
       });
     });
 
     it("should require lan field", function (done) {
-      models.Authentication.create({ ip: "192.168.0.1" }).catch(function () {
+      models.Authentication.create({ ip: "192.168.0.1", username: "user" }).catch(function (err) {
+        var err = _.findWhere(err.errors, { path: "lan" });
+        expect(err).to.exist;
         done();
       });
     });
@@ -30,7 +35,8 @@ describe("Models", function () {
     it("should not allow duplicate ip+lan", function (done) {
       var data = {
         ip: "192.168.0.1",
-        lan: "48"
+        lan: "48",
+        username: "user"
       };
       models.Authentication.create(data)
         .then(function () {
@@ -51,7 +57,8 @@ describe("Models", function () {
         .then(function () {
           return models.Authentication.create({
             ip: "192.168.0.1",
-            lan: "48"
+            lan: "48",
+            username: "user"
           });
         })
         .then(function (auth) {

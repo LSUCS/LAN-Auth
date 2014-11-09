@@ -2,7 +2,11 @@ var express    = require("express");
 var log        = require("./log");
 var bodyParser = require("body-parser");
 
+var sequelize = require("./models/sequelize");
+
 var app = express();
+
+sequelize.sync();
 
 app.use(bodyParser.json());
 app.use("/api", function (req, res) {

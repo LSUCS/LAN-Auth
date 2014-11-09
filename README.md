@@ -48,21 +48,46 @@ If the app ever needs reconfiguring for production (either a new server or a fre
 
 1. Install Phusion Passenger (for Nginx - not standalone), NVM (NodeJS Version Manager) and Git
 1. Install NodeJS using NVM and set the default version
-1. Configure the Passenger + Nginx like so:
+1. Configure Passenger + Nginx like so:
   ```
   server {
+    # Basic configuration
+    listen 80;
     server_name 192.168.0.25;
-    root /var/www/lan-auth/current/public/build;
 
-    # Redirect all unfound files to the app
-    error_page 404 /;
+    # lan-auth app
+    location / {
+      root /var/www/lan-auth/current/public/build;
 
-    # Passenger setup
-    passenger_enabled on;
-    passenger_app_type node;
-    passenger_base_uri /api;
-    passenger_app_root /var/www/lan-auth/current/;
-    passenger_startup_file app/app.js;
+      # Passenger settings
+      passenger_app_root /var/www/lan-auth/current;
+      passenger_enabled on;
+      passenger_app_type node;
+      passenger_startup_file app/app.js;
+    }
+
+    # phpMyAdmin static files
+    location /phpmyadmin {
+      root /var/www;
+      try_files $uri $uri/ =404;
+
+      index index.php index.html index.htm;
+    }
+
+    # PHP files
+    location ~ \.php$ {
+      # Set root if loading phpMyAdmin
+      if ($request_uri ~* /phpmyadmin) {
+        root /var/www;
+      }
+      try_files $uri =404;
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass unix:/var/run/php5-fpm.sock;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+    }
+
   }
   ```
 1. Create the folder /var/www/lan-auth and ensure the www-data user has full access

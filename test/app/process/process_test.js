@@ -42,7 +42,8 @@ describe("Processor", function () {
     });
     models.Authentication.create({
       ip: "192.168.0.1",
-      lan: "48"
+      lan: "48",
+      username: "user"
     })
     .then(process)
     .then(function () {
@@ -55,7 +56,8 @@ describe("Processor", function () {
   it("should mark the device as authenticated", function (done) {
     var data = {
       ip: "192.168.0.1",
-      lan: "48"
+      lan: "48",
+      username: "user"
     };
     models.Authentication.create(data)
       .then(process)
@@ -81,7 +83,8 @@ describe("Processor", function () {
     };
     var authData = {
       ip: "192.168.0.1",
-      lan: "48"
+      lan: "48",
+      username: "user"
     };
     models.Device.create(deviceData)
       .then(function () {
