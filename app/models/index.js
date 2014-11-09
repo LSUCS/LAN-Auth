@@ -1,4 +1,5 @@
 module.exports = {
   Authentication: require("./authentication"),
-  Device: require("./device")
+  Device: require("./device"),
+  Log: require("./log")
 };

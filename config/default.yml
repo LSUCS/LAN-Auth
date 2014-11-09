@@ -17,6 +17,13 @@ log:
     maxsize: 3000000
     maxFiles: 10
     json: false
+  mysql:
+    host: localhost
+    port: 3306
+    database: lan-auth
+    user: root
+    password:
+    table: Logs
 
 lanApi:
   key: default

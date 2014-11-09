@@ -17,10 +17,13 @@ var Authentication = sequelize.define("Authentication", {
     unique: "authIndex"
   },
   username: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.STRING
+  },
+  seat: {
+    type: DataTypes.STRING
   }
 }, {
+  timestamps: false,
   instanceMethods: {
     getUnprocessedDevices: function () {
       return when.join(this.getDevices(), Device.all())

@@ -1,10 +1,22 @@
-var router = require("./router");
-
+var express             = require("express");
 var AuthenticationModel = require("../models/authentication");
+var addAuth             = require("../middleware/add-auth");
+var addLan              = require("../middleware/add-lan");
 
-router.route("/status")
+var router = express.Router();
+
+module.exports = {
+  router: router,
+  mount: "/status"
+};
+
+router.use(addLan);
+router.use(addAuth);
+
+router.route("/")
 
   //Return auth status of the user
+  .get(addAuth)
   .get(function (req, res, next) {
     var respond = function (status) {
       res.json({
@@ -13,22 +25,18 @@ router.route("/status")
         ip: req.ip
       });
     };
-    AuthenticationModel.find({ where: { ip: req.ip, lan: req.lan } })
-      .then(function (auth) {
-        if (!auth) {
-          respond("unauthorised");
-        } else {
-          auth.getUnprocessedDevices()
-            .then(function (devices) {
-              var status;
-              if (devices.length > 0) {
-                respond("processing");
-              } else {
-                respond("authorised");
-              }
-            })
-            .catch(next);
-        }
-      })
-      .catch(next);
+    if (!req.auth) {
+      respond("unauthorised");
+    } else {
+      req.auth.getUnprocessedDevices()
+        .then(function (devices) {
+          var status;
+          if (devices.length > 0) {
+            respond("processing");
+          } else {
+            respond("authorised");
+          }
+        })
+        .catch(next);
+    }
   });
