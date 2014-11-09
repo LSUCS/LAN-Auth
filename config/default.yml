@@ -19,7 +19,7 @@ log:
     json: false
 
 lanApi:
-  key:
+  key: default
   baseUrl: http://lan.lsucs.org.uk/api/
   lanNumber:
     cache: 1800 #In seconds
