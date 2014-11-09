@@ -1,6 +1,7 @@
 var express      = require("express");
 var LogModel     = require("../models/log");
 var requireAdmin = require("../middleware/require-admin");
+var _            = require("lodash");
 
 var router = express.Router();
 
@@ -14,11 +15,24 @@ router.use(requireAdmin);
 
 router.route("/")
 
-  //List devices
+  //List logs
   .get(function (req, res, next) {
     LogModel.all()
       .then(function (logs) {
-        res.json(_.pluck(logs, "values"));
+        logs = _.chain(logs)
+          .pluck("values")
+          .each(function (log) {
+            log.meta = JSON.parse(log.meta);
+          })
+          .value();
+        res.json(logs);
       })
+      .catch(next);
+  })
+
+  //Clear logs
+  .delete(function (req, res, next) {
+    LogModel.destroy()
+      .then(res.json)
       .catch(next);
   });

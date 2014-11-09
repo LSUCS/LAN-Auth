@@ -5,3 +5,7 @@ db:
 log:
   console:
     silent: true
+  file:
+    silent: true
+  mysql:
+    silent: true

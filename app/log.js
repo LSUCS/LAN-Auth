@@ -1,7 +1,7 @@
 var winston = require("winston");
 var _       = require("lodash");
 var config  = require("config");
-require("winston-mysql-transport");
+require("./util/winston-mysql");
 
 var transports = [];
 
@@ -16,7 +16,7 @@ transports.push(new(winston.transports.File)(_.extend({
   timestamp: true
 }, config.log.file)));
 
-transports.push(new(winston.transports.Mysql)(config.log.mysql));
+transports.push(new(winston.transports.MySQL)(config.log.mysql));
 
 module.exports = new winston.Logger({
   transports: transports

@@ -12,14 +12,13 @@ var Log = sequelize.define("Log", {
   },
   timestamp: {
     type: DataTypes.DATE,
-    allowNull: false
+    defaultValue: DataTypes.NOW
   },
   meta: {
     type: DataTypes.STRING
-  },
-  hostname: {
-    type: DataTypes.STRING
   }
+}, {
+  timestamps: false
 });
 
 module.exports = Log;

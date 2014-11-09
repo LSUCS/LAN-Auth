@@ -31,8 +31,7 @@
     "sequelize": "^2.0.0-rc2",
     "telnet-client": "0.0.7",
     "when": "^3.5.2",
-    "winston": "^0.8.3",
-    "winston-mysql-transport": "^0.1.2"
+    "winston": "^0.8.3"
   },
   "devDependencies": {
     "blanket": "^1.1.6",

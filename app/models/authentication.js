@@ -23,7 +23,6 @@ var Authentication = sequelize.define("Authentication", {
     type: DataTypes.STRING
   }
 }, {
-  timestamps: false,
   instanceMethods: {
     getUnprocessedDevices: function () {
       return when.join(this.getDevices(), Device.all())
