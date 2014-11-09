@@ -1,10 +1,10 @@
 var expect = require("chai").expect;
 var sinon  = require("sinon");
 
-var process = require("../../../app/process");
-var sequelize = require("../../../app/models/sequelize");
-var models = require("../../../app/models");
-var makeTelnetServer = require("../../lib/make-telnet-server");
+var process = require("../");
+var sequelize = require("../../models/sequelize");
+var models = require("../../models");
+var makeTelnetServer = require("../../../test/lib/make-telnet-server");
 
 describe("Processor", function () {
 

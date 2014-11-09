@@ -1,8 +1,8 @@
 var expect = require("chai").expect;
 var sinon  = require("sinon");
 
-var deviceManager    = require("../../../app/process/device-manager");
-var makeTelnetServer = require("../../lib/make-telnet-server");
+var deviceManager    = require("../device-manager");
+var makeTelnetServer = require("../../../test/lib/make-telnet-server");
 
 describe("DeviceManager", function () {
 

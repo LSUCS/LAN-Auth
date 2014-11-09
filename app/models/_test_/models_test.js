@@ -2,8 +2,8 @@ var expect = require("chai").expect;
 var sinon  = require("sinon");
 var _      = require("lodash");
 
-var models = require("../../app/models");
-var sequelize = require("../../app/models/sequelize");
+var models = require("../index");
+var sequelize = require("../sequelize");
 
 describe("Models", function () {
 
