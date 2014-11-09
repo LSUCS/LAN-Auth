@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var sinon  = require("sinon");
 
-var getLan = require("../../../app/process/get-lan");
+var getLan = require("../../../app/util/get-lan");
 
 describe("Get LAN number", function () {
 
