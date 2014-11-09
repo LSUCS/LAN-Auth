@@ -3,6 +3,7 @@ var request = require("request");
 var url     = require("url");
 var _       = require("lodash");
 var config  = require("config");
+var log     = require("../log");
 
 module.exports = {
   get: _.partial(lanApi, "get"),
@@ -21,6 +22,7 @@ function lanApi(method, action, data) {
       formData: data
     }, function (err, response) {
       if (err) {
+        log.error(err);
         return reject(err);
       }
       resolve(response.body);
