@@ -6,6 +6,7 @@ db:
   password:
   dialect: mysql
   logging: false
+
 log:
   console:
     level: debug
@@ -16,3 +17,9 @@ log:
     maxsize: 3000000
     maxFiles: 10
     json: false
+
+lanApi:
+  key:
+  baseUrl: http://lan.lsucs.org.uk/api/
+  lanNumber:
+    cache: 1800 #In seconds

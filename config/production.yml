@@ -1,5 +1,7 @@
 log:
   console:
     level: warn
+    handleExceptions: true
   file:
     silent: false
+    handleExceptions: true

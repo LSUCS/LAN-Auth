@@ -4,7 +4,7 @@ var log     = require("../log");
 
 var models        = require("../models");
 var deviceManager = require("./device-manager");
-var getLan        = require("./get-lan");
+var getLan        = require("../util/get-lan");
 
 module.exports = process;
 

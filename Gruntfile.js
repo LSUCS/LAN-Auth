@@ -82,11 +82,11 @@ module.exports = function (grunt) {
     proxy.on("error", function (err) {
       grunt.log.error(err);
     });
-    server.use("/api", function (req, res) {
+    server.use(serveStatic("public/build"));
+    server.use("/", function (req, res) {
       proxy.web(req, res);
     });
     server.use(liveReload({ port: 9000 }));
-    server.use(serveStatic("public/build"));
     server.listen(8000);
   });
 
