@@ -2,19 +2,19 @@ var utils    = require("util");
 var winston  = require("winston");
 var LogModel = require("../models/log");
 
-module.exports = MySQL;
+module.exports = DB;
 
-function MySQL(options) {
+function DB(options) {
   this.options = options || {};
 }
 
-utils.inherits(MySQL, winston.Transport);
+utils.inherits(DB, winston.Transport);
 
-winston.transports.MySQL = MySQL;
+winston.transports.DB = DB;
 
-MySQL.prototype.name = "MySQL";
+DB.prototype.name = "DB";
 
-MySQL.prototype.log = function (level, msg, meta, callback) {
+DB.prototype.log = function (level, msg, meta, callback) {
   if (!this.options.silent) {
     LogModel.create({
       message: msg,

@@ -1,5 +1,4 @@
 var expect = require("chai").expect;
-var sinon  = require("sinon");
 
 var process = require("../");
 var sequelize = require("../../models/sequelize");

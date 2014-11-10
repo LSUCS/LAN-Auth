@@ -1,6 +1,4 @@
 var expect = require("chai").expect;
-var sinon  = require("sinon");
-
 var deviceManager    = require("../device-manager");
 var makeTelnetServer = require("../../../test/lib/make-telnet-server");
 

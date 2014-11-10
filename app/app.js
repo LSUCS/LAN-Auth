@@ -23,7 +23,12 @@ app.use("/api", function (req, res, next) {
 });
 
 //Mount routes
-var routes = require("require-all")(__dirname + "/routes");
+var routes = require("require-all")({
+  dirname: __dirname + "/routes",
+  filter: /(.+)\.js$/,
+  excludeDirs: /^_test_$/,
+  dependencies: {}
+});
 _.each(routes, function (route) {
   app.use("/api" + route.mount, route.router);
 });

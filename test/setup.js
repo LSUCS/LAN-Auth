@@ -13,6 +13,7 @@ chai.use(sinonChai);
 
 require("blanket")({
   pattern: [
+    path.resolve(__dirname, "..", "app"),
     path.resolve(__dirname, "..", "app/app.js")
   ]
 });
