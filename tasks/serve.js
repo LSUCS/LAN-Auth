@@ -8,7 +8,7 @@ module.exports = function (grunt) {
   grunt.registerTask("serve", function () {
     this.async();
     var server = connect();
-    var proxy  = httpProxy.createProxyServer({ target: "http://localhost:3000" });
+    var proxy  = httpProxy.createProxyServer({ target: grunt.config("serve.appRoot") });
     proxy.on("error", function (err) {
       grunt.log.error(err);
     });
@@ -16,8 +16,8 @@ module.exports = function (grunt) {
     server.use("/", function (req, res) {
       proxy.web(req, res);
     });
-    server.use(liveReload({ port: 9000 }));
-    server.listen(8000);
+    server.use(liveReload({ port: grunt.config("serve.livereload") }));
+    server.listen(grunt.config("serve.port"));
     grunt.log.writeln("Application running on port 8000");
   });
 

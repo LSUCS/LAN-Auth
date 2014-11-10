@@ -4,8 +4,15 @@ var process = require("../");
 var sequelize = require("../../models/sequelize");
 var models = require("../../models");
 var makeTelnetServer = require("../../../test/lib/make-telnet-server");
+var makeLanApiServer = require("../../../test/lib/make-lan-api-server");
 
 describe("Processor", function () {
+
+  before(function (done) {
+    makeLanApiServer().then(function () {
+      done();
+    });
+  });
 
   var server;
   beforeEach(function (done) {

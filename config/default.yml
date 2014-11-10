@@ -22,7 +22,7 @@ log:
 
 lanApi:
   key: default
-  baseUrl: http://lan.lsucs.org.uk/api/
+  baseUrl: http://127.0.0.1:8001/
   lanNumber:
     cache: 1800 #In seconds
 

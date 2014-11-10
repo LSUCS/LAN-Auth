@@ -8,6 +8,7 @@ if (!process.env.NODE_CONFIG_DIR) {
 var chai      = require("chai");
 var sinonChai = require("sinon-chai");
 var path      = require("path");
+var config    = require("config");
 
 chai.use(sinonChai);
 

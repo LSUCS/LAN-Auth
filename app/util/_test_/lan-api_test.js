@@ -1,5 +1,4 @@
 var expect = require("chai").expect;
-
 var lanApi = require("../lan-api");
 
 describe("LAN API", function () {

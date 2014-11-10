@@ -14,7 +14,7 @@ describe("AuthenticationModel", function () {
   });
 
   it("should require ip field", function (done) {
-    models.Authentication.create({ lan: "48", username: "user" }).catch(function (err) {
+    models.Authentication.create({}).catch(function (err) {
       var err = _.findWhere(err.errors, { path: "ip" });
       expect(err).to.exist;
       done();
@@ -22,7 +22,7 @@ describe("AuthenticationModel", function () {
   });
 
   it("should require lan field", function (done) {
-    models.Authentication.create({ ip: "192.168.0.1", username: "user" }).catch(function (err) {
+    models.Authentication.create({}).catch(function (err) {
       var err = _.findWhere(err.errors, { path: "lan" });
       expect(err).to.exist;
       done();

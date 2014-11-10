@@ -3,3 +3,4 @@
 --reporter mocha-spec-cov
 --require blanket
 app/**/*_test.js
+test/global.js
