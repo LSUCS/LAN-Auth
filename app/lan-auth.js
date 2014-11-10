@@ -11,17 +11,29 @@ require("./models");
 
 module.exports = LanAuth;
 
+/**
+ * Responsible for booting the app, mounting middleware and routes
+ * and then starting the server.
+ */
 function LanAuth() {
   this.app = express();
   this.app.enable("trust proxy");
   this._mount();
 }
 
+/**
+ * Initialise the server
+ * @return {Promise}
+ */
 LanAuth.prototype.init = function () {
   return sequelize.sync()
     .then(this._listen.bind(this));
 };
 
+/**
+ * Set the server to listen
+ * @return {Promise}
+ */
 LanAuth.prototype._listen = function () {
   var self = this;
   return when.promise(function (resolve) {
@@ -33,6 +45,9 @@ LanAuth.prototype._listen = function () {
   });
 };
 
+/**
+ * Mount middleware/routes on the app
+ */
 LanAuth.prototype._mount = function () {
 
   //Body parsing
