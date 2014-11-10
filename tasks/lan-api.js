@@ -4,9 +4,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask("lan-api", function () {
     this.async();
-    var port = grunt.config("lanApi.port");
-    makeLanApiServer(port);
-    grunt.log.writeln("Fake LAN API listening on port " + port);
+    makeLanApiServer();
+    grunt.log.writeln("Fake LAN API started");
   });
 
 };

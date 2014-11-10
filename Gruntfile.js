@@ -58,9 +58,6 @@ module.exports = function (grunt) {
         dest: "public/build/styles.css"
       }
     },
-    lanApi: {
-      port: 8001
-    },
     serve: {
       port: 8000,
       appRoot: "http://localhost:3000",

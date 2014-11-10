@@ -5,6 +5,3 @@ log:
   file:
     silent: false
     handleExceptions: true
-
-lanApi:
-  baseUrl: http://lan.lsucs.org.uk/api/
