@@ -1,6 +1,7 @@
 var express      = require("express");
 var DeviceModel  = require("../models/device");
 var requireAdmin = require("../middleware/require-admin");
+var _            = require("lodash");
 
 var router = express.Router();
 
@@ -32,9 +33,18 @@ router.route("/")
       .catch(next);
   })
 
+  //Delete all devices
+  .delete(function (req, res, next) {
+    DeviceModel.destroy()
+      .then(res.json)
+      .catch(next);
+  });
+
+router.route("/:deviceId")
+
   //Update device
   .put(function (req, res, next) {
-    Devicemodel.find({ where: { id: req.body.id } })
+    DeviceModel.find(req.params.deviceId)
       .then(function (device) {
         if (!device) {
           var err = new Error("Device not found");
@@ -47,18 +57,9 @@ router.route("/")
       .catch(next);
   })
 
-  //Delete all devices
-  .delete(function (req, res, next) {
-    DeviceModel.destroy()
-      .then(res.json)
-      .catch(next);
-  });
-
-router.route("/:deviceId")
-
   //Delete an individual device
   .delete(function (req, res, next) {
-    DeviceModel.destroy({ where: { id: req.params.deviceId } })
+    DeviceModel.destroy(req.params.deviceId)
       .then(res.json)
       .catch(next);
   });

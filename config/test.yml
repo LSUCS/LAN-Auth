@@ -2,8 +2,13 @@ db:
   username: root
   storage: ":memory:"
   dialect: sqlite
+
 log:
   console:
     silent: true
   file:
     silent: true
+
+admin:
+  key: default
+  enable: false

@@ -5,3 +5,6 @@ log:
   file:
     silent: false
     handleExceptions: true
+
+admin:
+  enable: true

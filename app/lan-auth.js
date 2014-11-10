@@ -5,6 +5,7 @@ var sequelize  = require("./models/sequelize");
 var _          = require("lodash");
 var config     = require("config");
 var when       = require("when");
+var path       = require("path");
 
 //Load models - causes them to register with Sequelize
 require("./models");
@@ -74,7 +75,7 @@ LanAuth.prototype._mount = function () {
     dependencies: {}
   });
   _.each(routes, function (route) {
-    this.app.use("/api" + route.mount, route.router);
+    this.app.use(path.join("/", config.app.apiBase, route.mount), route.router);
   }, this);
 
   //Error handling
@@ -89,8 +90,8 @@ LanAuth.prototype._mount = function () {
         code: err.status,
         message: err.message || err.name || "Internal Server Error"
       };
-      log.err(err.message || err.name);
-      log.err(err.stack);
+      log.error(err.message || err.name);
+      log.error(err.stack);
     } else if (err.status >= 400) {
       msg = {
         status: "error",
