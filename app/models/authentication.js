@@ -17,7 +17,8 @@ var Authentication = sequelize.define("Authentication", {
     unique: "authIndex"
   },
   username: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   seat: {
     type: DataTypes.STRING
