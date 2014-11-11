@@ -38,7 +38,13 @@ module.exports = function (grunt) {
     },
     nodemon: {
       dev: {
-        script: "app/app.js"
+        script: "app/app.js",
+        options: {
+          ignore: [
+            "node_modules/**",
+            "public/**"
+          ] 
+        }
       }
     },
     concurrent: {
