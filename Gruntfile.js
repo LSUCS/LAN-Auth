@@ -57,6 +57,9 @@ module.exports = function (grunt) {
       }
     },
     autoprefixer: {
+      options: {
+        safe: true
+      },
       dev: {
         src: "public/build/styles.css",
         dest: "public/build/styles.css"
@@ -75,7 +78,7 @@ module.exports = function (grunt) {
   require("load-grunt-tasks")(grunt);
   grunt.loadTasks("tasks");
 
-  grunt.registerTask("build", ["clean:build", "browserify:dev", "less:dev", "autoprefixer:dev", "copy:build"]);
+  grunt.registerTask("build", ["clean:build", "browserify:dev", "less:dev", "copy:build"]);
   grunt.registerTask("default", ["concurrent:dev"]);
 
 
