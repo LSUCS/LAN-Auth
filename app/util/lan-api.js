@@ -19,7 +19,7 @@ function lanApi(method, action, data) {
       method: method,
       url: url.resolve(config.lanApi.baseUrl, action),
       json: true,
-      formData: data
+      form: data
     }, function (err, response) {
       if (err) {
         log.error(err);

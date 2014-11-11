@@ -24,23 +24,16 @@ describe("Logs Routes", function () {
       .then(function () {
         done();
       });
-  })
+  });
 
   describe("GET /logs", function (done) {
-
-    it("should succeed", function (done) {
-      app.request("get", "logs")
-        .then(function (res) {
-          expect(res.body.code).to.equal(200);
-          expect(res.body.status).to.equal("success");
-          done();
-        });
-    });
 
     it("should return logs", function (done) {
       log.info("testing123", function () {
         app.request("get", "logs")
           .then(function (res) {
+            expect(res.body.code).to.equal(200);
+            expect(res.body.status).to.equal("success");
             expect(res.body.data).to.be.instanceof(Array);
             var row = res.body.data[0];
             expect(row).to.exist;

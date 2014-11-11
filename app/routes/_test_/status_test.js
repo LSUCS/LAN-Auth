@@ -27,7 +27,7 @@ describe("Status Routes", function () {
       .then(function () {
         done();
       });
-  })
+  });
 
   describe("GET /status", function (done) {
 
@@ -74,6 +74,21 @@ describe("Status Routes", function () {
         .then(function (res) {
           expect(res.body.data.status).to.equal("unauthorised");
           done();
+       });
+    });
+
+    it("should only look up against current lan", function (done) {
+      authData.lan = lan - 1;
+      models.Authentication.create(authData)
+        .then(function () {
+          return models.Device.create(deviceData);
+        })
+        .then(function () {
+          app.request("get", "status")
+            .then(function (res) {
+              expect(res.body.data.status).to.equal("unauthorised");
+              done();
+            });
         });
     });
 

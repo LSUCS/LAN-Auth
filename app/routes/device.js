@@ -59,7 +59,7 @@ router.route("/:deviceId")
 
   //Delete an individual device
   .delete(function (req, res, next) {
-    DeviceModel.destroy(req.params.deviceId)
+    DeviceModel.destroy({ where: { id: req.params.deviceId } })
       .then(res.json)
       .catch(next);
   });

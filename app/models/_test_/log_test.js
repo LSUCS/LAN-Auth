@@ -16,7 +16,7 @@ describe("LogModel", function () {
   it("should require level", function (done) {
     models.Log.create({})
       .catch(function (err) {
-        var err = _.findWhere(err.errors, { path: "level" });
+        err = _.findWhere(err.errors, { path: "level" });
         expect(err).to.exist;
         done();
       });
@@ -25,7 +25,7 @@ describe("LogModel", function () {
   it("should require message", function (done) {
     models.Log.create({})
       .catch(function (err) {
-        var err = _.findWhere(err.errors, { path: "message" });
+        err = _.findWhere(err.errors, { path: "message" });
         expect(err).to.exist;
         done();
       });

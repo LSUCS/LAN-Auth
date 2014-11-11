@@ -16,7 +16,7 @@ describe("DeviceModel", function () {
   it("should require host", function (done) {
     models.Device.create({})
       .catch(function (err) {
-        var err = _.findWhere(err.errors, { path: "host" });
+        err = _.findWhere(err.errors, { path: "host" });
         expect(err).to.exist;
         done();
       });
@@ -25,7 +25,7 @@ describe("DeviceModel", function () {
   it("should require name", function (done) {
     models.Device.create({})
       .catch(function (err) {
-        var err = _.findWhere(err.errors, { path: "name" });
+        err = _.findWhere(err.errors, { path: "name" });
         expect(err).to.exist;
         done();
       });

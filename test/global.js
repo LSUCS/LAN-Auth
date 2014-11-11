@@ -6,6 +6,9 @@ var _                = require("lodash");
  * Global before/after statements
  */
 
+//Add mocha jshint tests
+require('mocha-jshint')();
+
 //Fake LAN API Server
 var lanServer;
 before(function (done) {

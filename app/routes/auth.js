@@ -1,4 +1,5 @@
 var express             = require("express");
+var _                   = require("lodash");
 var AuthenticationModel = require("../models/authentication");
 var lanApi              = require("../util/lan-api");
 var requireAdmin        = require("../middleware/require-admin");
@@ -25,6 +26,13 @@ router.route("/")
       err.status = 400;
       throw err;
     }
+
+    //Validate inputs
+    req.checkBody("username", "Username required").notEmpty();
+    req.checkBody("password", "Password required").notEmpty();
+    req.checkBody("seat", "Seat required").notEmpty();
+    req.validate();
+
     var data = {
       username: req.body.username,
       password: req.body.password,
@@ -59,9 +67,9 @@ router.route("/")
   //List authentications
   .get(requireAdmin)
   .get(function (req, res, next) {
-    AuthenticationModel.all()
+    AuthenticationModel.findAll({ where: { lan: req.lan } })
       .then(function (auths) {
-        res.json(_.pluc(auths, "values"));
+        res.json(_.pluck(auths, "values"));
       })
       .catch(next);
   })
@@ -70,15 +78,19 @@ router.route("/")
   .delete(requireAdmin)
   .delete(function (req, res, next) {
     AuthenticationModel
-      .destroy()
+      .destroy({ where: { lan: req.lan } })
       .then(res.json)
-      .catch(next)
+      .catch(next);
   })
 
   //Create authentication without LAN verification
   .put(requireAdmin)
   .put(function (req, res, next) {
-    AuthenticationModel.find({ where: { ip: req.body.ip } })
+    //Validate inputs
+    req.checkBody("ip", "IP required").notEmpty().isIP();
+    req.validate();
+
+    AuthenticationModel.find({ where: { ip: req.body.ip, lan: req.lan } })
       .then(function (auth) {
         if (auth) {
           var err = new Error("IP already authenticated at LAN");
@@ -103,6 +115,9 @@ router.route("/:authId")
 
   //Delete an individual authentication
   .delete(function (req, res, next) {
+    //Validate
+    req.checkParams("authId", "Invalid authId").notEmpty().isInt();
+    req.validate();
     AuthenticationModel.destroy({ where: { id: req.params.authId } })
       .then(res.json)
       .catch(next);

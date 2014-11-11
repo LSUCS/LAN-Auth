@@ -26,7 +26,7 @@ describe("Winston DB", function () {
           expect(logs[0].level).to.equal("info");
           expect(logs[0].message).to.equal("testing123");
           done();
-        })
+        });
     });
   });
 

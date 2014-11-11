@@ -35,21 +35,14 @@ describe("Device Routes", function () {
 
   describe("GET /device", function (done) {
 
-    it("should succeed", function (done) {
-      app.request("get", "device")
-        .then(function (res) {
-          expect(res.body.code).to.equal(200);
-          expect(res.body.status).to.equal("success");
-          done();
-        });
-    });
-
     it("should return devices", function (done) {
       models.Device.create(deviceData)
         .then(function () {
           return app.request("get", "device");
         })
         .then(function (res) {
+          expect(res.body.code).to.equal(200);
+          expect(res.body.status).to.equal("success");
           expect(res.body.data).to.not.be.empty;
           var device = res.body.data[0];
           expect(device).to.exist;
@@ -68,18 +61,11 @@ describe("Device Routes", function () {
 
   describe("POST /device", function (done) {
 
-    it("should succeed", function (done) {
+    it("should store device in database", function (done) {
       app.request("post", "device", deviceData)
         .then(function (res) {
           expect(res.body.code).to.equal(200);
           expect(res.body.status).to.equal("success");
-          done();
-        });
-    });
-
-    it("should store device in database", function (done) {
-      app.request("post", "device", deviceData)
-        .then(function () {
           return models.Device.all();
         })
         .then(function (devices) {
@@ -159,6 +145,28 @@ describe("Device Routes", function () {
         })
         .then(function (foundDevice) {
           expect(foundDevice).to.not.exist;
+          done();
+        });
+    });
+
+    it("should not delete other devices", function (done) {
+      var deviceData2 = {
+        host: "127.0.0.2",
+        port: 23,
+        name: "server2"
+      };
+      models.Device.bulkCreate([deviceData, deviceData2])
+        .then(function () {
+          return models.Device.all();
+        })
+        .then(function (devices) {
+          return app.request("delete", "device/" + devices[0].id);
+        })
+        .then(function () {
+          return models.Device.all();
+        })
+        .then(function (devices) {
+          expect(devices.length).to.equal(1);
           done();
         });
     });

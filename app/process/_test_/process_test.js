@@ -98,7 +98,7 @@ describe("Processor", function () {
       })
       .then(process)
       .then(function () {
-        return models.Authentication.find({ where: authData })
+        return models.Authentication.find({ where: authData });
       })
       .then(function (auth) {
         return auth.getDevices();
@@ -107,6 +107,6 @@ describe("Processor", function () {
         expect(devices).to.have.length(1);
         done();
       });
-  })
+  });
 
 });

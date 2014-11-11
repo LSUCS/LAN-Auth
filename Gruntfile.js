@@ -22,7 +22,7 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      src: {
+      clientsrc: {
         files: ["public/js/**/*.js", "public/js/**/*.jsx", "public/less/**/*.less", "public/static/**/*.html"],
         tasks: ["build"],
         options: {
@@ -30,6 +30,10 @@ module.exports = function (grunt) {
             port: 9000
           }
         }
+      },
+      appsrc: {
+        files: ["../app/**/*.js", "../test/**/*.js", "../task/**/*.js"],
+        tasks: ["jshint:app"]
       }
     },
     nodemon: {
@@ -39,7 +43,7 @@ module.exports = function (grunt) {
     },
     concurrent: {
       dev: {
-        tasks: ["serve", "lan-api", "nodemon", "watch:src"],
+        tasks: ["serve", "lan-api", "nodemon", "watch:clientsrc", "watch:appsrc"],
         options: {
           logConcurrentOutput: true
         }
@@ -62,6 +66,9 @@ module.exports = function (grunt) {
       port: 8000,
       appRoot: "http://localhost:3000",
       livereload: 9000
+    },
+    jshint: {
+      app: ["../app/**/*.js", "../test/**/*.js", "../task/**/*.js"]
     }
   });
 

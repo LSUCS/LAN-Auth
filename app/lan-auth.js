@@ -2,6 +2,7 @@ var express    = require("express");
 var log        = require("./log");
 var bodyParser = require("body-parser");
 var sequelize  = require("./models/sequelize");
+var validator  = require("express-validator");
 var _          = require("lodash");
 var config     = require("config");
 var when       = require("when");
@@ -53,9 +54,10 @@ LanAuth.prototype._mount = function () {
 
   //Body parsing
   this.app.use(bodyParser.json());
+  this.app.use(validator());
 
   //JSON output utility
-  this.app.use("/api", function (req, res, next) {
+  this.app.use(config.app.apiBase, function (req, res, next) {
     res._json = res.json.bind(res);
     res.json = function (data) {
       res._json({
@@ -63,6 +65,20 @@ LanAuth.prototype._mount = function () {
         code: res.statusCode || 200,
         data: data || {}
       });
+    };
+    next();
+  });
+
+  //Validation helper
+  this.app.use(config.app.apiBase, function (req, res, next) {
+    req.validate = function () {
+      var errors = req.validationErrors();
+      if (errors) {
+        var err = new Error("ValidationErrors");
+        err.status = 400;
+        err.data = errors;
+        throw err;
+      }
     };
     next();
   });
@@ -79,11 +95,11 @@ LanAuth.prototype._mount = function () {
   }, this);
 
   //Error handling
-  this.app.use(function (err, req, res, next) {
+  this.app.use(config.app.apiBase, function (err, req, res, next) {
     if (!err.status) {
       err.status = 500;
     }
-    var msg
+    var msg;
     if (err.status >= 500) {
       msg = {
         status: "fail",
