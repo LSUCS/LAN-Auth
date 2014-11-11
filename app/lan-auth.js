@@ -7,6 +7,7 @@ var _          = require("lodash");
 var config     = require("config");
 var when       = require("when");
 var path       = require("path");
+var process    = require("./process");
 
 //Load models - causes them to register with Sequelize
 require("./models");
@@ -29,7 +30,8 @@ function LanAuth() {
  */
 LanAuth.prototype.init = function () {
   return sequelize.sync()
-    .then(this._listen.bind(this));
+    .then(this._listen.bind(this))
+    .tap(this._startProcessing.bind(this));
 };
 
 /**
@@ -45,6 +47,18 @@ LanAuth.prototype._listen = function () {
       resolve(self.server);
     });
   });
+};
+
+/**
+ * Start the processing timer
+ */
+LanAuth.prototype._startProcessing = function () {
+  if (!config.app.processing.enable) {
+    return;
+  }
+  log.info("Auth process enabled");
+  log.info("Running auth process every %s seconds", config.app.processing.interval);
+  setInterval(process, config.app.processing.interval * 1000);
 };
 
 /**

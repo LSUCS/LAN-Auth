@@ -1,6 +1,9 @@
 app:
   port: 3000
   apiBase: /api
+  processing:
+    enable: true
+    interval: 30
 
 db:
   host: localhost

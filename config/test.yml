@@ -1,3 +1,7 @@
+app:
+  processing:
+    enable: false
+
 db:
   username: root
   storage: ":memory:"
