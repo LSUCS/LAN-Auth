@@ -6,6 +6,7 @@ var menuItems = [
   { route: "home", text: "Home" },
   { type: mui.MenuItem.Types.SUBHEADER, text: "Admin" },
   { route: "auth-list", text: "Auth List" },
+  { route: "devices", text: "Devices" },
   { route: "settings", text: "Settings" },
   { route: "logs", text: "Logs" }
 ];

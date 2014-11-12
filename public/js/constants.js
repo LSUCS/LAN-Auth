@@ -6,7 +6,8 @@ var constants = {
     GET: {
       STATUS: ["PENDING", "ERROR"],
       AUTHS: ["PENDING", "ERROR"],
-      LOGS: ["PENDING", "ERROR"]
+      LOGS: ["PENDING", "ERROR"],
+      DEVICES: ["PENDING", "ERROR"]
     },
     CREATE: {
       AUTH: ["PENDING", "ERROR"]

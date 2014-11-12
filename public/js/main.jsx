@@ -13,6 +13,7 @@ var Logs     = require("./components/pages/logs/logs.jsx");
 var Settings = require("./components/pages/settings/settings.jsx");
 var AuthList = require("./components/pages/auth-list/auth-list.jsx");
 var Login    = require("./components/pages/login/login.jsx");
+var Devices  = require("./components/pages/devices/devices.jsx");
 
 var StatusActions = require("./actions/status");
 var AdminActions  = require("./actions/admin");
@@ -32,6 +33,7 @@ React.render((
       <Route name="settings" handler={Settings} pageTitle="Settings" />
       <Route name="logs" handler={Logs} pageTitle="Logs" />
       <Route name="login" handler={Login} pageTitle="Admin Login" />
+      <Route name="devices" handler={Devices} pageTitle="Devices" />
       <Redirect from="/" to="home" />
     </Route>
   </Routes>
