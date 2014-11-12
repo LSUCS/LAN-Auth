@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         }
       },
       appsrc: {
-        files: ["../app/**/*.js", "../test/**/*.js", "../task/**/*.js"],
+        files: ["./app/**/*.js", "./test/**/*.js", "./task/**/*.js"],
         tasks: ["jshint:app"]
       }
     },
