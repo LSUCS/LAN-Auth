@@ -31,6 +31,9 @@ var StatusUnauthorised = React.createClass({
           placeholder="Seat"
           description="Seat number of the desk you are sitting at."
           onChange={this._handleChange.bind(this, "seat")} />
+        <div className="policy">
+          <mui.Checkbox name="usage-policy" onClick={this._handlePolicyChange} /><label for="usage-policy">I agree to Loughborough University's <a href="/policy/lu-acceptable-use-policy.html">Internet Acceptable Use Policy</a></label>
+        </div>
         <mui.PaperButton type="RAISED" label="Login" primary={true} onClick={this._onButtonClick} />
       </mui.Paper>
     );
@@ -43,6 +46,7 @@ var StatusUnauthorised = React.createClass({
         password: "",
         seat: ""
       },
+      usageAccepted: false,
       error: null
     };
   },
@@ -53,8 +57,16 @@ var StatusUnauthorised = React.createClass({
     this.setState(nextState);
   },
 
+  _handlePolicyChange: function (e, state) {
+    var nextState = _.extend(this.state);
+    nextState.usageAccepted = state;
+    this.setState(nextState);
+  },
+
   _onButtonClick: function () {
-    AuthActions.createAuth(this.state.fields);
+    if (this.state.usageAccepted) {
+      AuthActions.createAuth(this.state.fields);
+    }
   }
 
 });
