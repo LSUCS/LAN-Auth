@@ -33,7 +33,6 @@
     "react": "^0.12.0",
     "react-router": "^0.10.2",
     "react-spinner": "^0.2.0",
-    "react-table-component": "^0.2.0",
     "request": "^2.47.0",
     "require-all": "0.0.8",
     "sequelize": "^2.0.0-rc2",

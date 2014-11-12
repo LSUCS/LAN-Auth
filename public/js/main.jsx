@@ -12,12 +12,17 @@ var Home     = require("./components/pages/home/home.jsx");
 var Logs     = require("./components/pages/logs/logs.jsx");
 var Settings = require("./components/pages/settings/settings.jsx");
 var AuthList = require("./components/pages/auth-list/auth-list.jsx");
+var Login    = require("./components/pages/login/login.jsx");
 
 var StatusActions = require("./actions/status");
+var AdminActions  = require("./actions/admin");
 
 window.React = React;
 
 window.constants = require("./constants");
+
+AdminActions.getPassword();
+StatusActions.getStatus();
 
 React.render((
   <Routes location="history">
@@ -26,9 +31,8 @@ React.render((
       <Route name="auth-list" handler={AuthList} pageTitle="Auth List" />
       <Route name="settings" handler={Settings} pageTitle="Settings" />
       <Route name="logs" handler={Logs} pageTitle="Logs" />
+      <Route name="login" handler={Login} pageTitle="Admin Login" />
       <Redirect from="/" to="home" />
     </Route>
   </Routes>
 ), document.body);
-
-StatusActions.getStatus();

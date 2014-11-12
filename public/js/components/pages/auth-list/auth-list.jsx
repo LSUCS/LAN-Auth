@@ -1,11 +1,11 @@
 var React = require("react");
-var Table = require("react-table-component").Table;
 var mui   = require("material-ui");
 
 var AuthListStore   = require("../../../stores/auth-list");
 var AuthActions = require("../../../actions/auth");
 
-var Spinner = require("../../spinner.jsx");
+var Spinner = require("../../widgets/spinner.jsx");
+var Table   = require("../../widgets/table.jsx");
 
 var AuthList = React.createClass({
 
@@ -14,18 +14,14 @@ var AuthList = React.createClass({
     if (this.state.auths.length === 0) {
       return <Spinner title="Loading..." />;
     }
+    var headers = ["Username", "IP", "Seat"];
     var tableData = this.state.auths.map(function (auth) {
-      return {
-        Username: auth.username,
-        IP: auth.ip,
-        Seat: auth.seat
-      };
+      return [auth.username, auth.ip, auth.seat];
     });
     return (
-      <mui.Paper zDepth={1}>
+      <mui.Paper zDepth={1} className="auth-table">
         <Table
-          className="auth-table reactable"
-          sortable={true}
+          headers={headers}
           data={tableData} />
       </mui.Paper>
     );

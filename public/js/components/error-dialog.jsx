@@ -12,8 +12,10 @@ var ErrorDialog = React.createClass({
     if (!this.state.message) {
       return null;
     }
+    var message = this.state.message;
     var data;
     if (this.state.message === "ValidationErrors") {
+      message = null;
       var errs = _.chain(this.state.data)
         .pluck("msg")
         .map(function (msg) {
@@ -27,7 +29,7 @@ var ErrorDialog = React.createClass({
           <mui.Paper zDepth={4}>
             <h3 className="dialog-title">Error</h3>
             <div className="dialog-content">
-              {this.state.message}
+              {message}
               {data}
             </div>
             <div className="dialog-actions">

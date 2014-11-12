@@ -6,6 +6,7 @@ var AdminStore = require("../stores/admin");
 
 var Nav         = require("./nav.jsx");
 var ErrorDialog = require("./error-dialog.jsx");
+var Logout      = require("./logout.jsx");
 
 var App = React.createClass({
 
@@ -16,7 +17,9 @@ var App = React.createClass({
     return (
       <mui.AppCanvas predefinedLayout={1}>
         <ErrorDialog />
-        <mui.AppBar onMenuIconClick={this._onMenuIconClick} title={title} zDepth={0} />
+        <mui.AppBar onMenuIconClick={this._onMenuIconClick} title={title} zDepth={0}>
+          <Logout />
+        </mui.AppBar>
         <Nav ref="nav" />
         <div className="mui-app-content-canvas">
           <this.props.activeRouteHandler />

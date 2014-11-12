@@ -3,7 +3,6 @@
   background: white;
 
   thead {
-    cursor: pointer;
     background: @deep-orange-A200;
     color: @grey-200;
     font-size: 16px;
@@ -12,24 +11,6 @@
   td, th {
     text-align: center;
     padding: 10px 80px;
-  }
-
-  th.reactable-header-sort-desc, th.reactable-header-sort-asc {
-    background: @deep-orange-A100;
-
-    &:after {
-      font-size: 10px;
-      padding-left: 10px;
-      padding-bottom: 5px;
-    }
-  }
-
-
-  th.reactable-header-sort-desc:after {
-    content: '\25B2';
-  }
-  th.reactable-header-sort-asc:after {
-    content: '\25BC';
   }
 
   tbody {

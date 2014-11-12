@@ -1,7 +1,7 @@
 var React = require("react");
 var StatusStore = require("../../../stores/status");
 
-var Spinner            = require("../../spinner.jsx");
+var Spinner            = require("../../widgets/spinner.jsx");
 var StatusUnauthorised = require("./status-unauthorised.jsx");
 var StatusAuthorised   = require("./status-authorised.jsx");
 

@@ -5,6 +5,8 @@ var _          = require("lodash");
 var Dispatcher = require("../dispatcher");
 var Constants  = require("../constants");
 
+var AdminStore = require("../stores/admin");
+
 module.exports = DAO;
 
 function DAO() { }
@@ -19,6 +21,7 @@ methods.forEach(function (method) {
       if (data) {
         req.send(data);
       }
+      req.set("Authorization", AdminStore.getState().password);
       req.end(function (err, res) {
         switch (res.body.status) {
 
@@ -30,7 +33,7 @@ methods.forEach(function (method) {
           case "fail":
             err = new Error(res.body.message);
             err.data = res.body.data;
-            if (err.code === 401) {
+            if (res.body.code === 401) {
               Dispatcher.dispatch(Constants.API_ERROR_UNAUTHORISED);
             }
             reject(err);

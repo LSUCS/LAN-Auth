@@ -5,4 +5,16 @@
   right: 0;
   bottom: 0;
   z-index: 100;
+
+  ul {
+    margin-left: 20px;
+    li {
+      &:before {
+        content: '\0021';
+        margin-right: 10px;
+        font-weight: bold;
+        color: @deep-orange-700;
+      }
+    }
+  }
 }

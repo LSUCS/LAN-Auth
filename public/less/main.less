@@ -12,6 +12,7 @@
 @import "spinner";
 @import "error-dialog";
 @import "reactable";
+@import "logout";
 
 body {
   margin: 0;
@@ -21,14 +22,11 @@ body {
   font-family: 'Roboto', sans-serif;
   display: flex;
   background: url("/img/bg.png") repeat;
-}
-
-.mui-app-content-canvas {
-  margin-top: 40px;
-  position: absolute;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, 0%);
+  height: auto;
+  min-height: 100%;
+  text-align: center;
 }
 
 @import "home";
+@import "logs";
+@import "login";
