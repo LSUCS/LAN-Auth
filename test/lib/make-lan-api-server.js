@@ -3,9 +3,9 @@ var bodyParser = require("body-parser");
 var when       = require("when");
 var config     = require("config");
 
-module.exports = makeLanApiapp;
+module.exports = makeLanApi;
 
-function makeLanApiapp() {
+function makeLanApi(port) {
 
   var app = express();
   app.use(bodyParser.json());
@@ -30,7 +30,7 @@ function makeLanApiapp() {
   });
 
   return when.promise(function (resolve) {
-    var server = app.listen(null, function () {
+    var server = app.listen(port, function () {
       var address = server.address();
       config.lanApi.baseUrl = "http://" + address.address + ":" + address.port;
       resolve(server);

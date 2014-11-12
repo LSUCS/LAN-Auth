@@ -1,16 +1,13 @@
 var Store      = require("../lib/store");
 var Dispatcher = require("../dispatcher");
 var Constants  = require("../constants");
+var _          = require("lodash");
 
+var StatusActions = require("../actions/status");
 
 function StatusStore() {
 
   var store = this;
-
-  this.state = {
-    loading: true,
-    status: null
-  };
 
   Dispatcher.register(onEvent);
 
@@ -18,12 +15,14 @@ function StatusStore() {
     switch(action.type) {
 
       case Constants.API_GET_STATUS_PENDING:
-        setLoading(true);
+        setStatus({});
         break;
 
       case Constants.API_GET_STATUS:
-        setLoading(false);
         setStatus(action.payload);
+        if (action.payload.status === "processing") {
+          setTimeout(StatusActions.getStatus, 3000);
+        }
         break;
 
       default:
@@ -31,13 +30,8 @@ function StatusStore() {
     }
   }
 
-  function setLoading(bool) {
-    store.state.loading = bool;
-    store.emitChange();
-  }
-
   function setStatus(status) {
-    store.state.status = status;
+    store.state = status;
     store.emitChange();
   }
 

@@ -11,7 +11,7 @@ DeviceDAO.prototype.getDevices = function () {
   return this.get("/");
 };
 
-DeviceDAO.prototype.addDevice = function (Device) {
+DeviceDAO.prototype.createDevice = function (Device) {
   return this.post("/", Device);
 };
 

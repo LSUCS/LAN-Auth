@@ -1,19 +1,26 @@
 var React = require("react");
-
 var StatusStore = require("../../../stores/status");
+
+var Spinner            = require("../../spinner.jsx");
+var StatusUnauthorised = require("./status-unauthorised.jsx");
+var StatusAuthorised   = require("./status-authorised.jsx");
 
 var Home = React.createClass({
 
   render: function() {
-    var msg;
-    if (this.state.loading) {
-      msg = "Loading...";
-    } else {
-      msg = JSON.stringify(this.state.status);
+    switch (this.state.status) {
+      case "unauthorised":
+        return <StatusUnauthorised />;
+
+      case "authorised":
+        return <StatusAuthorised />;
+
+      case "processing":
+        return <Spinner title="Processing..." />;
+
+      default:
+        return <Spinner title="Loading..." />;
     }
-    return (
-      <div>{msg}</div>
-    );
   },
 
   getInitialState: function () {

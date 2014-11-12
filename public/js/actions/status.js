@@ -7,10 +7,9 @@ var StatusActions = {
   getStatus: function () {
     Dispatcher.dispatch(Constants.API_GET_STATUS_PENDING);
     StatusDAO.getStatus()
-      .then(function (status) {
+      .done(function (status) {
         Dispatcher.dispatch(Constants.API_GET_STATUS, status);
-      })
-      .catch(function (err) {
+      }, function (err) {
         Dispatcher.dispatch(Constants.API_GET_STATUS_ERROR, err);
       });
   }

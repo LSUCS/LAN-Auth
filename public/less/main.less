@@ -4,8 +4,13 @@
 
 @import "../../node_modules/material-ui/docs/dist/less/scaffolding.less";
 @import "../../node_modules/material-ui/docs/dist/less/components.less";
+@import (inline) "../../node_modules/react-spinner/react-spinner.css";
 
 @import "variables";
+@import "overrides";
+
+@import "spinner";
+@import "error-dialog";
 
 body {
   margin: 0;
@@ -14,4 +19,15 @@ body {
   font-size: 12px;
   font-family: 'Roboto', sans-serif;
   display: flex;
+  background: url("/img/bg.png") repeat;
 }
+
+.mui-app-content-canvas {
+  margin-top: 20px;
+  position: absolute;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, 0%);
+}
+
+@import "home";

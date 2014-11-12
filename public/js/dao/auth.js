@@ -11,7 +11,7 @@ AuthDAO.prototype.getAuths = function () {
   return this.get("/");
 };
 
-AuthDAO.prototype.addAuth = function (auth) {
+AuthDAO.prototype.createAuth = function (auth) {
   return this.post("/", auth);
 };
 
@@ -19,7 +19,7 @@ AuthDAO.prototype.deleteAuths = function () {
   return this.delete("/");
 };
 
-AuthDAO.prototype.addUnverifiedAuth = function (auth) {
+AuthDAO.prototype.createUnverifiedAuth = function (auth) {
   return this.put("/", auth);
 };
 

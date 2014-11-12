@@ -4,7 +4,20 @@ var constants = {
 
   API: {
     GET: {
-      STATUS: ["PENDING", "ERROR"]
+      STATUS: ["PENDING", "ERROR"],
+      AUTHS: ["PENDING", "ERROR"]
+    },
+    CREATE: {
+      AUTH: ["PENDING", "ERROR"]
+    },
+    ERROR: {
+      UNAUTHORISED: null
+    }
+  },
+
+  UI: {
+    ERRORS: {
+      DISMISS: null
     }
   }
 

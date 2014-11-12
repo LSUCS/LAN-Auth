@@ -78,6 +78,14 @@ module.exports = function (grunt) {
     },
     jshint: {
       app: ["../app/**/*.js", "../test/**/*.js", "../task/**/*.js"]
+    },
+    lanApi: {
+      port: 8002
+    },
+    env: {
+      dev: {
+        NODE_ENV: "development"
+      }
     }
   });
 
@@ -85,7 +93,7 @@ module.exports = function (grunt) {
   grunt.loadTasks("tasks");
 
   grunt.registerTask("build", ["clean:build", "browserify:dev", "less:dev", "copy:build"]);
-  grunt.registerTask("default", ["concurrent:dev"]);
+  grunt.registerTask("default", ["env:dev", "concurrent:dev"]);
 
 
 };

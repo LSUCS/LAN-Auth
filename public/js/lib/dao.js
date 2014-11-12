@@ -1,7 +1,9 @@
-var request = require("superagent");
-var when    = require("when");
-var path    = require("path-browserify");
-var _       = require("lodash");
+var request    = require("superagent");
+var when       = require("when");
+var path       = require("path-browserify");
+var _          = require("lodash");
+var Dispatcher = require("../dispatcher");
+var Constants  = require("../constants");
 
 module.exports = DAO;
 
@@ -28,6 +30,9 @@ methods.forEach(function (method) {
           case "fail":
             err = new Error(res.body.message);
             err.data = res.body.data;
+            if (err.code === 401) {
+              Dispatcher.dispatch(Constants.API_ERROR_UNAUTHORISED);
+            }
             reject(err);
             break;
 

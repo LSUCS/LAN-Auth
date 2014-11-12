@@ -1,0 +1,24 @@
+.mui-input {
+
+  margin-bottom: 55px;
+
+  input {
+    &:focus, &:valid {
+      &+.mui-input-placeholder {
+        color: @primary-1-color;
+        &+.mui-input-highlight {
+          background-color: @primary-1-color;
+          &+.mui-input-bar {
+            &::before, &::after {
+              background-color: @primary-1-color;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mui-input-description {
+    color: @primary-1-color;
+  }
+}

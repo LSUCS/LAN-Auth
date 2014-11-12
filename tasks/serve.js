@@ -13,6 +13,7 @@ module.exports = function (grunt) {
     proxy.on("error", function (err) {
       grunt.log.error(err);
     });
+    server.use(liveReload({ port: grunt.config("serve.livereload") }));
     server.use(serveStatic("public/build"));
     server.use("/", function (req, res) {
       if (/^\/api/.test(req.url)) {
@@ -21,7 +22,6 @@ module.exports = function (grunt) {
         res.sendFile(path.resolve(__dirname, "../public/build/index.html"));
       }
     });
-    server.use(liveReload({ port: grunt.config("serve.livereload") }));
     server.listen(grunt.config("serve.port"));
     grunt.log.writeln("Application running on port 8000");
   });
