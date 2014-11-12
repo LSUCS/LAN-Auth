@@ -86,13 +86,19 @@ module.exports = function (grunt) {
       dev: {
         NODE_ENV: "development"
       }
+    },
+    symlink: {
+      policy: {
+        src: "node_modules/lu-internet-usage-policy",
+        dest: "public/build/policy"
+      }
     }
   });
 
   require("load-grunt-tasks")(grunt);
   grunt.loadTasks("tasks");
 
-  grunt.registerTask("build", ["clean:build", "browserify:dev", "less:dev", "copy:build"]);
+  grunt.registerTask("build", ["clean:build", "symlink:policy", "browserify:dev", "less:dev", "copy:build"]);
   grunt.registerTask("default", ["env:dev", "concurrent:dev"]);
 
 

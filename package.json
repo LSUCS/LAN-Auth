@@ -33,13 +33,15 @@
     "react": "^0.12.0",
     "react-router": "^0.10.2",
     "react-spinner": "^0.2.0",
+    "react-table-component": "^0.2.0",
     "request": "^2.47.0",
     "require-all": "0.0.8",
     "sequelize": "^2.0.0-rc2",
     "superagent": "^0.21.0",
     "telnet-client": "0.0.7",
     "when": "^3.5.2",
-    "winston": "^0.8.3"
+    "winston": "^0.8.3",
+    "lu-internet-usage-policy": "git://github.com/LSUCS/LU-Internet-Usage-Policy.git"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
@@ -55,6 +57,7 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-less": "^0.12.0",
+    "grunt-contrib-symlink": "^0.3.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-env": "^0.4.2",
     "grunt-nodemon": "^0.3.0",
