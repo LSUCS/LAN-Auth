@@ -1,5 +1,7 @@
 var React = require("react");
 
+var StatusStore = require("../../../stores/status");
+
 var Home = React.createClass({
 
   render: function() {

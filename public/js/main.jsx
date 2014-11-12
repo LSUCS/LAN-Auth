@@ -8,10 +8,10 @@ var DefaultRoute  = Router.DefaultRoute;
 var Redirect      = Router.Redirect;
 
 var App      = require("./components/app.jsx");
-var Home     = require("./components/pages/home.jsx");
-var Logs     = require("./components/pages/logs.jsx");
-var Settings = require("./components/pages/settings.jsx");
-var AuthList = require("./components/pages/auth-list.jsx");
+var Home     = require("./components/pages/home/home.jsx");
+var Logs     = require("./components/pages/logs/logs.jsx");
+var Settings = require("./components/pages/settings/settings.jsx");
+var AuthList = require("./components/pages/auth-list/auth-list.jsx");
 
 window.React = React;
 
