@@ -13,7 +13,11 @@ var Logs     = require("./components/pages/logs/logs.jsx");
 var Settings = require("./components/pages/settings/settings.jsx");
 var AuthList = require("./components/pages/auth-list/auth-list.jsx");
 
+var StatusActions = require("./actions/status");
+
 window.React = React;
+
+window.constants = require("./constants");
 
 React.render((
   <Routes location="history">
@@ -26,3 +30,5 @@ React.render((
     </Route>
   </Routes>
 ), document.body);
+
+StatusActions.getStatus();

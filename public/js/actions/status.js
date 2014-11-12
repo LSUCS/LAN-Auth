@@ -1,11 +1,20 @@
-var Actions = require("../lib/actions");
+var Dispatcher = require("../dispatcher");
+var StatusDAO  = require("../dao/status");
+var Constants  = require("../constants");
 
-var StatusDAO = require("../dao/status");
-
-Actions.extend({
+var StatusActions = {
 
   getStatus: function () {
-    return StatusDAO.getStatus();
+    Dispatcher.dispatch(Constants.API_GET_STATUS_PENDING);
+    StatusDAO.getStatus()
+      .then(function (status) {
+        Dispatcher.dispatch(Constants.API_GET_STATUS, status);
+      })
+      .catch(function (err) {
+        Dispatcher.dispatch(Constants.API_GET_STATUS_ERROR, err);
+      });
   }
 
-});
+};
+
+module.exports = StatusActions;
