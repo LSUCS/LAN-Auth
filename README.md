@@ -55,11 +55,13 @@ If the app ever needs reconfiguring for production (either a new server or a fre
     listen 80;
     server_name 192.168.0.25;
 
-    # lan-auth app
+    # lan-auth static files
     location / {
       root /var/www/lan-auth/current/public/build;
-
-      # Passenger settings
+      error_page 404 = /index.html;
+    }
+    # lan-auth app
+    location /api {
       passenger_app_root /var/www/lan-auth/current;
       passenger_enabled on;
       passenger_app_type node;
