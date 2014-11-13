@@ -4,9 +4,8 @@ var mui   = require("material-ui");
 var DeviceStore   = require("../../../stores/device");
 var DeviceActions = require("../../../actions/device");
 
-var Spinner = require("../../widgets/spinner.jsx");
-var Table   = require("../../widgets/table.jsx");
-
+var Spinner      = require("../../widgets/spinner.jsx");
+var Table        = require("../../widgets/table.jsx");
 var Devices = React.createClass({
 
   render: function() {
@@ -19,17 +18,24 @@ var Devices = React.createClass({
       return [device.name, device.host, device.port, device.username];
     });
     return (
-      <mui.Paper zDepth={1} className="device-table">
-        <Table
-          headers={headers}
-          data={tableData} />
-      </mui.Paper>
+      <div className="devices">
+        <div className="button-bar">
+          <mui.PaperButton type="RAISED" primary={true} label="ADD DEVICE" />
+          <mui.PaperButton type="RAISED" primary={true} label="DELETE ALL" />
+        </div>
+        <mui.Paper zDepth={1} className="device-table">
+          <Table
+            headers={headers}
+            data={tableData} />
+        </mui.Paper>
+      </div>
     );
   },
 
   getInitialState: function () {
     return {
-      devices: []
+      devices: [],
+      editing: false
     };
   },
 
