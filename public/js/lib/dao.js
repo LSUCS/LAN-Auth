@@ -11,7 +11,7 @@ module.exports = DAO;
 
 function DAO() { }
 
-var methods = ["get", "put", "post", "delete"];
+var methods = ["get", "put", "post", "del"];
 methods.forEach(function (method) {
 
   DAO.prototype[method] = function (pathname, data) {

@@ -16,7 +16,7 @@ DeviceDAO.prototype.createDevice = function (Device) {
 };
 
 DeviceDAO.prototype.deleteDevices = function () {
-  return this.delete("/");
+  return this.del("/");
 };
 
 DeviceDAO.prototype.updateDevice = function (device) {
@@ -24,7 +24,7 @@ DeviceDAO.prototype.updateDevice = function (device) {
 };
 
 DeviceDAO.prototype.deleteDevice = function (deviceId) {
-  return this.delete("/" + deviceId);
+  return this.del("/" + deviceId);
 };
 
 module.exports = new DeviceDAO();

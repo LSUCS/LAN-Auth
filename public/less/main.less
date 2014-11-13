@@ -9,10 +9,9 @@
 @import "variables";
 @import "overrides";
 
-@import "spinner";
-@import "error-dialog";
-@import "reactable";
-@import "logout";
+@import "widgets/dialog";
+@import "widgets/reactable";
+@import "widgets/spinner";
 
 body {
   margin: 0;
@@ -27,7 +26,10 @@ body {
   text-align: center;
 }
 
-@import "home";
-@import "logs";
-@import "login";
-@import "devices";
+@import "logout";
+@import "error-dialog";
+
+@import "pages/home";
+@import "pages/logs";
+@import "pages/login";
+@import "pages/devices";

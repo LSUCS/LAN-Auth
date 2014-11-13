@@ -17,9 +17,37 @@ function DeviceStore() {
         setDevices(action.payload);
         break;
 
+      case Constants.API_DELETE_DEVICE:
+        removeDevice(action.payload);
+        break;
+
+      case Constants.API_DELETE_DEVICES:
+        setDevices([]);
+        break;
+
+      case Constants.API_CREATE_DEVICE:
+      case Constants.API_UPDATE_DEVICE:
+        addDevice(action.payload);
+        break;
+
       default:
 
     }
+  }
+
+  function removeDevice(deviceId) {
+    store.state = store.state.filter(function (device) {
+      return device.id !== deviceId;
+    });
+    store.emitChange();
+  }
+
+  function addDevice(device) {
+    var nextDevices = store.state.filter(function (oldDevice) {
+      return oldDevice.id !== device.id;
+    });
+    nextDevices.push(device);
+    setDevices(nextDevices);
   }
 
   function setDevices(devices) {

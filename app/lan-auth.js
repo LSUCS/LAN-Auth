@@ -118,7 +118,8 @@ LanAuth.prototype._mount = function () {
       msg = {
         status: "fail",
         code: err.status,
-        message: err.message || err.name || "Internal Server Error"
+        message: err.message || err.name || "Internal Server Error",
+        data: err.data || err.errors || ""
       };
       log.error(err.message || err.name);
       log.error(err.stack);
@@ -127,7 +128,7 @@ LanAuth.prototype._mount = function () {
         status: "error",
         code: err.status,
         message: err.message || err.name || "Unknown Request Error",
-        data: err.data || ""
+        data: err.data || err.errors || ""
       };
     }
     res.status(err.status);

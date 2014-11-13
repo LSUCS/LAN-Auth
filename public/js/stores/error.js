@@ -14,10 +14,16 @@ function ErrorStore() {
       case Constants.API_CREATE_AUTH:
       case Constants.API_CREATE_AUTH_PENDING:
       case Constants.UI_ERRORS_DISMISS:
+      case Constants.API_CREATE_DEVICE:
+      case Constants.API_CREATE_DEVICE_PENDING:
+      case Constants.API_UPDATE_DEVICE:
+      case Constants.API_UPDATE_DEVICE_PENDING:
         clearError();
         break;
 
+      case Constants.API_CREATE_DEVICE_ERROR:
       case Constants.API_CREATE_AUTH_ERROR:
+      case Constants.API_UPDATE_DEVICE_ERROR:
         setError(action.payload);
         break;
 

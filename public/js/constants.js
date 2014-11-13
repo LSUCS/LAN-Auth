@@ -10,10 +10,18 @@ var constants = {
       DEVICES: ["PENDING", "ERROR"]
     },
     CREATE: {
-      AUTH: ["PENDING", "ERROR"]
+      AUTH: ["PENDING", "ERROR"],
+      DEVICE: ["PENDING", "ERROR"]
     },
     ERROR: {
       UNAUTHORISED: null
+    },
+    UPDATE: {
+      DEVICE: ["PENDING", "ERROR"]
+    },
+    DELETE: {
+      DEVICE: ["PENDING", "ERROR"],
+      DEVICES: ["PENDING", "ERROR"]
     }
   },
 

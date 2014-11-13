@@ -1,10 +1,10 @@
 var React = require("react");
-var mui   = require("material-ui");
 var _     = require("lodash");
-var $     = require("jquery");
 
 var ErrorStore   = require("../stores/error");
 var ErrorActions = require("../actions/error");
+
+var Dialog       = require("./widgets/dialog.jsx");
 
 var ErrorDialog = React.createClass({
 
@@ -22,25 +22,24 @@ var ErrorDialog = React.createClass({
           return <li>{msg}</li>;
         });
       data = <ul>{errs}</ul>;
+    } else if (this.state.message === "Validation error") {
+      message = null;
+      var errs = _.chain(this.state.data)
+        .pluck("message")
+        .map(function (msg) {
+          return <li>{msg}</li>;
+        });
+      data = <ul>{errs}</ul>;
     }
     return (
-      <div className="error-dialog">
-        <div className="dialog show">
-          <mui.Paper zDepth={4}>
-            <h3 className="dialog-title">Error</h3>
-            <div className="dialog-content">
-              {message}
-              {data}
-            </div>
-            <div className="dialog-actions">
-              <div className="actions-right">
-                <div className="action" onClick={this._handleClose}>OK</div>
-              </div>
-            </div>
-          </mui.Paper>
-          <div className="dialog-overlay" onClick={this._handleClose}></div>
-        </div>
-      </div>
+      <Dialog
+        title="Error"
+        className="error-dialog"
+        onClose={this._handleClose}
+        actions={[{ text: "OK" }]}>
+        {message}
+        {data}
+      </Dialog>
     );
   },
 
@@ -54,13 +53,6 @@ var ErrorDialog = React.createClass({
 
   componentWillUnmount: function () {
     ErrorStore.removeChangeListener(this.onErrorChanged);
-  },
-
-  componentDidUpdate: function () {
-    var $el = $(this.getDOMNode()),
-      height = $el.innerHeight();
-
-    $el.css('margin-top', -height / 2);
   },
 
   _handleClose: function () {
