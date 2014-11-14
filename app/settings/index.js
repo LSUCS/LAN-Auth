@@ -13,32 +13,21 @@ function checkDefaults() {
   });
 }
 
-var initialised = false;
-
 module.exports = {
 
   init: function () {
-    if (!initialised) {
-      return checkDefaults();
-    }
-    return when.resolve(true);
+    return checkDefaults();
   },
 
   get: function (key) {
-    return this.init()
-      .then(function () {
-        return SettingModel.find({ where: { key: key } });
-      })
+    return SettingModel.find({ where: { key: key } })
       .then(function (setting) {
         return _.extend({}, settings[key], setting);
       });
   },
 
   getAll: function () {
-    return this.init()
-      .then(function () {
-        return SettingModel.all();
-      })
+    return SettingModel.all()
       .then(function (all) {
         return _.map(all, function (setting) {
           return _.extend({}, settings[key], setting);
@@ -51,10 +40,7 @@ module.exports = {
   },
 
   set: function (key, value) {
-    return this.init()
-      .then(function () {
-        return SettingModel.find({ where: { key: key } });
-      })
+    return SettingModel.find({ where: { key: key } })
       .then(function (setting) {
         return setting.updateAttributes({ value: value });
       });
