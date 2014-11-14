@@ -114,6 +114,9 @@ LanAuth.prototype._mount = function () {
       err.status = 500;
     }
     var msg;
+    if (err.name === "SequelizeValidationError") {
+      err.status = 400;
+    }
     if (err.status >= 500) {
       msg = {
         status: "fail",
@@ -121,7 +124,6 @@ LanAuth.prototype._mount = function () {
         message: err.message || err.name || "Internal Server Error",
         data: err.data || err.errors || ""
       };
-      log.error(err.message || err.name);
       log.error(err.stack);
     } else if (err.status >= 400) {
       msg = {
