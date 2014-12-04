@@ -29,7 +29,7 @@
     "js-yaml": "^3.2.2",
     "lodash": "^2.4.1",
     "lu-internet-usage-policy": "git://github.com/LSUCS/LU-Internet-Usage-Policy.git",
-    "material-ui": "^0.2.1",
+    "material-ui": "git://github.com/oliverwoodings/material-ui.git",
     "mysql": "^2.5.3",
     "path-browserify": "0.0.0",
     "react": "^0.12.0",
@@ -39,7 +39,6 @@
     "require-all": "0.0.8",
     "sequelize": "^2.0.0-rc2",
     "superagent": "^0.21.0",
-    "telnet-client": "0.0.7",
     "when": "^3.5.2",
     "winston": "^0.8.3"
   },
