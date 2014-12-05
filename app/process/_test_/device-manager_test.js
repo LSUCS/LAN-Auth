@@ -1,6 +1,8 @@
 var expect        = require("chai").expect;
 var SSHDevice     = require("../ssh-device");
 var deviceManager = require("../device-manager");
+var when          = require("when");
+var _             = require("lodash");
 
 describe("DeviceManager", function () {
 
@@ -25,11 +27,14 @@ describe("DeviceManager", function () {
     var sshDevice = new SSHDevice(device);
     sshDevice.init = function () { };
     sshDevice.exec = function (cmd) {
-      expect(cmd).to.exit;
-      done();
+      expect(cmd).to.exist;
+      return when.resolve(true);
     };
     deviceManager.knownDevices.push(sshDevice);
-    deviceManager.authenticate(device, auth);
+    deviceManager.authenticate(device, auth)
+      .then(function () {
+        _.defer(done);
+      });
   });
 
   it("should reuse SSHDevice instances", function () {
