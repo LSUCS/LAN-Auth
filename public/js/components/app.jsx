@@ -8,6 +8,8 @@ var Nav         = require("./nav.jsx");
 var ErrorDialog = require("./error-dialog.jsx");
 var Logout      = require("./logout.jsx");
 
+require("react-tap-event-plugin")();
+
 var App = React.createClass({
 
   mixins: [Router.Navigation, Router.ActiveState],
@@ -17,7 +19,7 @@ var App = React.createClass({
     return (
       <mui.AppCanvas predefinedLayout={1}>
         <ErrorDialog />
-        <mui.AppBar onMenuIconClick={this._onMenuIconClick} title={title} zDepth={0}>
+        <mui.AppBar onMenuIconButtonTouchTap={this._onMenuIconClick} title={title} zDepth={0}>
           <Logout />
         </mui.AppBar>
         <Nav ref="nav" />

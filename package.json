@@ -34,10 +34,11 @@
     "path-browserify": "0.0.0",
     "react": "^0.12.1",
     "react-spinner": "^0.2.0",
+    "react-tap-event-plugin": "^0.1.3",
     "request": "^2.47.0",
     "require-all": "0.0.8",
-    "sequest": "git://github.com/mikeal/sequest.git",
     "sequelize": "^2.0.0-rc2",
+    "sequest": "git://github.com/mikeal/sequest.git",
     "superagent": "^0.21.0",
     "when": "^3.5.2",
     "winston": "^0.8.3"

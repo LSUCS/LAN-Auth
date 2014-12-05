@@ -22,6 +22,8 @@ window.React = React;
 
 window.constants = require("./constants");
 
+require("react-tap-event-plugin")();
+
 AdminActions.getPassword();
 StatusActions.getStatus();
 
