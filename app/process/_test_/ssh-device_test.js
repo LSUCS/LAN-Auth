@@ -64,7 +64,6 @@ describe("SSHDevice", function () {
       len--;
       setTimeout(function () {
         commands.shift();
-        console.log("Done", cmd);
         cb(null, true);
       }, 10);
     };
