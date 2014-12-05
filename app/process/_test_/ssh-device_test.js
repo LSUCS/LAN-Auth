@@ -61,9 +61,10 @@ describe("SSHDevice", function () {
     var len = commands.length;
     device._seq = function (cmd, cb) {
       expect(commands.length).to.equal(len);
-      commands.shift();
+      len--;
       setTimeout(function () {
-        len--;
+        commands.shift();
+        console.log("Done", cmd);
         cb(null, true);
       }, 10);
     };
