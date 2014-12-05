@@ -16,7 +16,7 @@ SSHDevice.DEFAULTS = {
 };
 
 SSHDevice.prototype.init = function () {
-  this._seq = sequest.connect(this._opts);
+  this._seq = sequest(this._opts.username + "@" + this._opts.host + ":" + this._opts.port, this._opts);
 };
 
 SSHDevice.prototype.matches = function (deviceOpts) {
@@ -26,7 +26,9 @@ SSHDevice.prototype.matches = function (deviceOpts) {
 };
 
 SSHDevice.prototype.exec = function (cmd) {
-  var self = this;
+  this._seq.write(cmd);
+  return when.resolve(true);
+  /*var self = this;
   var dfrd = when.defer();
   var fn = function () {
     self._seq(cmd, function (err, stdout) {
@@ -40,7 +42,7 @@ SSHDevice.prototype.exec = function (cmd) {
     });
   };
   this._pushQueue(fn);
-  return dfrd.promise;
+  return dfrd.promise;*/
 };
 
 SSHDevice.prototype._pushQueue = function (fn) {
