@@ -2,6 +2,9 @@ var _         = require("lodash");
 var SSHDevice = require("./ssh-device");
 var when      = require("when");
 var log       = require("../log");
+var config    = require("config");
+
+var deviceType = require("./types/" + config.app.processing.type);
 
 function DeviceManager() {
   this.knownDevices = [];
@@ -32,24 +35,14 @@ DeviceManager.prototype.getDevice = function (deviceOpts) {
 };
 
 /**
- * Adds an IP address to an EdgeOS device's firewall
+ * Adds an IP address to a device's firewall
  * @param  {Object} deviceOpts Device details object
  * @param  {String} authIP     IP Address
  * @return {Promise}
  */
 DeviceManager.prototype.authenticate = function (deviceOpts, auth) {
-
   var device = this.getDevice(deviceOpts);
-
-  //Execute command sequence
-  var args = [
-    auth.lan,
-    auth.username,
-    auth.ip
-  ];
-  var cmd = "sh /config/scripts/lan-auth.sh " + args.join(" ");
-  return device.exec(cmd);
-  
+  return deviceType.authenticate(device, auth);
 };
 
 module.exports = new DeviceManager();

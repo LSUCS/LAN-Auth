@@ -4,6 +4,7 @@ app:
   processing:
     enable: true
     interval: 30
+    type: edgeos
 
 db:
   host: localhost
