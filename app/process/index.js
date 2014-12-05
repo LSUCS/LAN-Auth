@@ -9,6 +9,7 @@ var getLan        = require("../util/get-lan");
 module.exports = process;
 
 function processAuths(auths) {
+  
   auths = auths || [];
   return when.map(auths, function (auth) {
     //Retrieve the unprocessed devices for the auth
@@ -16,7 +17,7 @@ function processAuths(auths) {
       .then(function (devices) {
         //Authenticate with each device
         return when.map(devices, function (device) {
-          return deviceManager.authenticate(device.dataValues, auth.ip)
+          return deviceManager.authenticate(device.dataValues, auth.dataValues)
             .then(function () {
               //On success, add the device to the auth
               return auth.addDevice(device);

@@ -47,7 +47,7 @@ router.route("/")
           err.status = 400;
           throw err;
         } else if (response != 1) {
-          throw new Error();
+          throw new Error("Unknown LAN API error");
         } else {
           //Otherwise add a new authentication
           return AuthenticationModel.create({

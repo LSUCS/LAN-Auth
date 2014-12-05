@@ -36,3 +36,6 @@ lanApi:
 admin:
   key: default
   enable: true
+
+test:
+  coverage: true

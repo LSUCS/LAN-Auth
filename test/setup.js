@@ -12,9 +12,11 @@ var config    = require("config");
 
 chai.use(sinonChai);
 
-require("blanket")({
-  pattern: [
-    path.resolve(__dirname, "..", "app"),
-    path.resolve(__dirname, "..", "app/app.js")
-  ]
-});
+if (config.test.coverage) {
+  require("blanket")({
+    pattern: [
+      path.resolve(__dirname, "..", "app"),
+      path.resolve(__dirname, "..", "app/app.js")
+    ]
+  });
+}

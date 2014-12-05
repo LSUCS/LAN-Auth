@@ -8,9 +8,9 @@ describe("AuthenticationModel", function () {
 
   beforeEach(function (done) {
     sequelize.sync({ force: true })
-      .then(function () {
+      .done(function () {
         done();
-      });
+      }, done);
   });
 
   it("should require ip field", function (done) {
@@ -68,7 +68,8 @@ describe("AuthenticationModel", function () {
         expect(device.port).to.equal(data.port);
         expect(device.name).to.equal(data.name);
         done();
-      });
+      })
+      .catch(done);
   });
 
 });

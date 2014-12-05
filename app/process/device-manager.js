@@ -1,30 +1,54 @@
-var _            = require("lodash");
+var _         = require("lodash");
 var SSHDevice = require("./ssh-device");
-var when         = require("when");
+var when      = require("when");
 
-var knownDevices = [];
+
+function DeviceManager() {
+  this.knownDevices = [];
+}
 
 /**
- * Adds an IP address to a Cisco device's ACL
+ * Returns a device instance matching inputted options
+ * Will be created if not found
+ * @param  {Object}    deviceOpts Device details object
+ * @return {SSHDevice}
+ */
+DeviceManager.prototype.getDevice = function (deviceOpts) {
+
+  //Find existing device
+  var device = _.find(this.knownDevices, function (knownDevice) {
+    return knownDevice.matches(deviceOpts);
+  });
+  
+  //If no existing device, create new one
+  if (!device) {
+    device = new SSHDevice(deviceOpts);
+    this.knownDevices.push(device);
+  }
+
+  return device;
+
+};
+
+/**
+ * Adds an IP address to an EdgeOS device's firewall
  * @param  {Object} deviceOpts Device details object
  * @param  {String} authIP     IP Address
  * @return {Promise}
  */
-function authenticate(deviceOpts, authIP) {
+DeviceManager.prototype.authenticate = function (deviceOpts, auth) {
 
-  //Find existing device
-  var device = _.findWhere(knownDevices, { host: deviceOpts.host, port: deviceOpts.port });
-  //If no existing device, create new one
-  if (!device) {
-    device = new SSHDevice(deviceOpts);
-    knownDevices.push(device);
-  }
+  var device = this.getDevice(deviceOpts);
 
   //Execute command sequence
-  return device.exec("/config/scripts/lan-auth.sh");
+  var args = [
+    auth.lan,
+    auth.username,
+    auth.ip
+  ];
+  var cmd = "/config/scripts/lan-auth.sh " + args.join(" ");
+  return device.exec(cmd);
   
-}
-
-module.exports = {
-  authenticate: authenticate
 };
+
+module.exports = new DeviceManager();

@@ -51,7 +51,8 @@ describe("Auth Routes", function () {
           expect(res.body.code).to.equal(400);
           expect(res.body.status).to.equal("error");
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should not reject if auth exists for old lan", function (done) {
@@ -71,7 +72,8 @@ describe("Auth Routes", function () {
           expect(res.body.code).to.equal(200);
           expect(res.body.status).to.equal("success");
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should error if LAN api errors", function (done) {
@@ -85,7 +87,8 @@ describe("Auth Routes", function () {
           expect(res.body.code).to.equal(400);
           expect(res.body.status).to.equal("error");
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should fail if LAN api fails", function (done) {
@@ -99,7 +102,8 @@ describe("Auth Routes", function () {
           expect(res.body.code).to.equal(500);
           expect(res.body.status).to.equal("fail");
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should store new auths in database", function (done) {
@@ -120,7 +124,8 @@ describe("Auth Routes", function () {
           expect(auth.seat).to.equal(authData.seat);
           expect(auth.lan).to.equal(lan);
           done();
-        });
+        })
+        .catch(done);
     });
 
   });
@@ -149,7 +154,8 @@ describe("Auth Routes", function () {
           expect(auth.seat).to.equal(authData.seat);
           expect(auth.lan).to.equal(authData.lan);
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should only return auths for current lan", function (done) {
@@ -166,7 +172,8 @@ describe("Auth Routes", function () {
         .then(function (res) {
           expect(res.body.data).to.be.empty;
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should require admin access", function (done) {
@@ -194,7 +201,8 @@ describe("Auth Routes", function () {
         .then(function (auths) {
           expect(auths).to.be.empty;
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should not delete auths of other lans", function (done) {
@@ -214,7 +222,8 @@ describe("Auth Routes", function () {
         .then(function (auths) {
           expect(auths).to.not.be.empty;
           done();
-        });
+        })
+        .catch(done);
     });
 
   });
@@ -232,7 +241,8 @@ describe("Auth Routes", function () {
           expect(auths[0].ip).to.equal("192.168.0.1");
           expect(auths[0].lan).to.equal(lan);
           done();
-        });
+        })
+        .catch(done);
     });
 
   });
@@ -256,7 +266,8 @@ describe("Auth Routes", function () {
         .then(function (auths) {
           expect(auths).to.be.empty;
           done();
-        });
+        })
+        .catch(done);
     });
 
     it("should not delete other auths", function (done) {
@@ -284,7 +295,8 @@ describe("Auth Routes", function () {
         .then(function (auths) {
           expect(auths.length).to.equal(1);
           done();
-        });
+        })
+        .catch(done);
     });
 
   });

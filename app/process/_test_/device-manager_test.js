@@ -1,50 +1,38 @@
-var expect = require("chai").expect;
-var deviceManager    = require("../device-manager");
-var makeTelnetServer = require("../../../test/lib/make-telnet-server");
+var expect        = require("chai").expect;
+var SSHDevice     = require("../ssh-device");
+var deviceManager = require("../device-manager");
 
 describe("DeviceManager", function () {
 
-  var server, receivedData, address;
+  before(function () {
+    deviceManager.knownDevices = [];
+  });
 
-  beforeEach(function (done) {
-    makeTelnetServer().then(function (_server) {
-      server = _server;
-      address = server.address();
+  afterEach(function () {
+    deviceManager.knownDevices = [];
+  });
+
+  it("should send correct command to SSHDevice", function (done) {
+    var device = {
+      host: "192.168.0.1",
+      port: 22
+    };
+    var auth = {
+      ip: "192.168.0.50",
+      lan: "48",
+      username: "test"
+    };
+    var args = [auth.lan, auth.username, auth.ip];
+    var command = "/config/scripts/lan-auth.sh " + args.join(" ");
+    var sshDevice = new SSHDevice(device);
+    sshDevice.exec = function (cmd) {
+      expect(cmd).to.equal(command);
       done();
-    });
+    };
+    deviceManager.knownDevices.push(sshDevice);
+    deviceManager.authenticate(device, auth);
   });
 
-  afterEach(function (done) {
-    server.die().then(done);
-  });
-
-  it("should send command sequence to server", function (done) {
-    var commands = [
-      "conf t",
-      "access-list 1 permit 192.168.0.50",
-      "end",
-      "exit"
-    ];
-    server.onData(function (data) {
-      expect(data).to.equal(commands[0]);
-      commands.shift();
-      if (commands.length === 0) {
-        done();
-      }
-    });
-    deviceManager.authenticate({
-      host: address.address,
-      port: address.port
-    }, "192.168.0.50");
-  });
-
-  it("should reject on telnet issues", function (done) {
-    deviceManager.authenticate({
-      host: "127.0.0.1",
-      port: "80"
-    }).catch(function () {
-      done();
-    });
-  });
+  it("should reuse SSHDevice instances");
 
 });

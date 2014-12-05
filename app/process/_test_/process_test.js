@@ -1,62 +1,46 @@
 var expect = require("chai").expect;
+var when = require("when");
 
-var process = require("../");
 var sequelize = require("../../models/sequelize");
 var models = require("../../models");
-var makeTelnetServer = require("../../../test/lib/make-telnet-server");
 var makeLanApiServer = require("../../../test/lib/make-lan-api-server");
+var process = require("../");
+var deviceManager = require("../device-manager");
 
 describe("Processor", function () {
 
+  var oldFn;
   before(function (done) {
+    oldFn = deviceManager.authenticate;
+    deviceManager.authenticate = function (deviceOpts) {
+      if (deviceOpts.name === "fail") {
+        return when.reject(false);
+      } else {
+        return when.resolve(true);
+      }
+    };
     makeLanApiServer().then(function () {
       done();
     });
   });
 
+  after(function () {
+    deviceManager.authenticate = oldFn;
+  });
+
   var server;
   beforeEach(function (done) {
     sequelize.sync({ force: true })
-      .then(makeTelnetServer)
-      .then(function (_server) {
-        server = _server;
+      .then(function () {
         return models.Device.create({
-          host: server.address().address,
-          port: server.address().port,
+          host: "192.168.0.1",
+          port: 22,
           name: "server1"
         });
       })
       .then(function () {
         done();
       });
-  });
-
-  afterEach(function (done) {
-    server.die().then(done);
-  });
-
-  it("should process unprocessed devices", function (done) {
-    var commands = [
-      "conf t",
-      "access-list 1 permit 192.168.0.1",
-      "end",
-      "exit"
-    ];
-    server.onData(function (data) {
-      expect(data).to.equal(commands[0]);
-      commands.shift();
-    });
-    models.Authentication.create({
-      ip: "192.168.0.1",
-      lan: "48",
-      username: "user"
-    })
-    .then(process)
-    .then(function () {
-      if (commands.length === 0) {
-        done();
-      }
-    });
   });
 
   it("should mark the device as authenticated", function (done) {
@@ -85,7 +69,7 @@ describe("Processor", function () {
     var deviceData = {
       host: "127.0.0.1",
       port: 80,
-      name: "server2"
+      name: "fail"
     };
     var authData = {
       ip: "192.168.0.1",
