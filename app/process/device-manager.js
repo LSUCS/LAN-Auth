@@ -1,5 +1,5 @@
 var _            = require("lodash");
-var TelnetDevice = require("./telnet-device");
+var SSHDevice = require("./ssh-device");
 var when         = require("when");
 
 var knownDevices = [];
@@ -16,21 +16,12 @@ function authenticate(deviceOpts, authIP) {
   var device = _.findWhere(knownDevices, { host: deviceOpts.host, port: deviceOpts.port });
   //If no existing device, create new one
   if (!device) {
-    device = new TelnetDevice(deviceOpts);
+    device = new SSHDevice(deviceOpts);
     knownDevices.push(device);
   }
 
   //Execute command sequence
-  return device.exec("conf t")
-    .then(function () {
-      device.exec("access-list 1 permit " + authIP);
-    })
-    .then(function () {
-      device.exec("end");
-    })
-    .then(function () {
-      device.exec("exit");
-    });
+  return device.exec("/config/scripts/lan-auth.sh");
   
 }
 
