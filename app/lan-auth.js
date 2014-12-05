@@ -59,6 +59,7 @@ LanAuth.prototype._startProcessing = function () {
   log.info("Auth process enabled");
   log.info("Running auth process every %s seconds", config.app.processing.interval);
   setInterval(process, config.app.processing.interval * 1000);
+  process();
 };
 
 /**

@@ -1,11 +1,10 @@
 var sequest = require("sequest");
 var when    = require("when");
-var nodefn  = require("when/node");
 var _       = require("lodash");
+var log     = require("../log");
 
 function SSHDevice(options) {
   this._opts = _.extend({}, SSHDevice.DEFAULTS, options);
-  this._init();
   this._queue = [];
 }
 
@@ -14,6 +13,10 @@ SSHDevice.DEFAULTS = {
   port: 22,
   username: "root",
   password: ""
+};
+
+SSHDevice.prototype.init = function () {
+  this._seq = sequest.connect(this._opts);
 };
 
 SSHDevice.prototype.matches = function (deviceOpts) {
@@ -26,17 +29,18 @@ SSHDevice.prototype.exec = function (cmd) {
   var self = this;
   var dfrd = when.defer();
   var fn = function () {
-    self._seq(cmd)
-      .tap(self._shiftQueue.bind(self))
-      .tap(self._processQueue.bind(self))
-      .done(dfrd.resolve, dfrd.reject);
+    self._seq(cmd, function (err, stdout) {
+      if (err) {
+        dfrd.reject(err);
+      } else {
+        dfrd.resolve(stdout);
+      }
+      self._shiftQueue();
+      self._processQueue();
+    });
   };
   this._pushQueue(fn);
   return dfrd.promise;
-};
-
-SSHDevice.prototype._init = function () {
-  this._seq = nodefn.lift(sequest.connect(this._opts));
 };
 
 SSHDevice.prototype._pushQueue = function (fn) {

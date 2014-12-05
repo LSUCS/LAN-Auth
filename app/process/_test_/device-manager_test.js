@@ -23,8 +23,9 @@ describe("DeviceManager", function () {
       username: "test"
     };
     var args = [auth.lan, auth.username, auth.ip];
-    var command = "/config/scripts/lan-auth.sh " + args.join(" ");
+    var command = "sh /config/scripts/lan-auth.sh " + args.join(" ");
     var sshDevice = new SSHDevice(device);
+    sshDevice.init = function () { };
     sshDevice.exec = function (cmd) {
       expect(cmd).to.equal(command);
       done();
@@ -33,6 +34,17 @@ describe("DeviceManager", function () {
     deviceManager.authenticate(device, auth);
   });
 
-  it("should reuse SSHDevice instances");
+  it("should reuse SSHDevice instances", function () {
+    var device = {
+      host: "192.168.0.1",
+      port: 22
+    };
+    var d1 = new SSHDevice(device);
+    d1.init = function () { };
+    deviceManager.knownDevices.push(d1);
+    var d2 = deviceManager.getDevice(device);
+    expect(d1).to.equal(d2);
+    expect(deviceManager.knownDevices).to.have.length(1);
+  });
 
 });

@@ -1,7 +1,7 @@
 var _         = require("lodash");
 var SSHDevice = require("./ssh-device");
 var when      = require("when");
-
+var log       = require("../log");
 
 function DeviceManager() {
   this.knownDevices = [];
@@ -23,6 +23,7 @@ DeviceManager.prototype.getDevice = function (deviceOpts) {
   //If no existing device, create new one
   if (!device) {
     device = new SSHDevice(deviceOpts);
+    device.init();
     this.knownDevices.push(device);
   }
 
@@ -46,7 +47,7 @@ DeviceManager.prototype.authenticate = function (deviceOpts, auth) {
     auth.username,
     auth.ip
   ];
-  var cmd = "/config/scripts/lan-auth.sh " + args.join(" ");
+  var cmd = "sh /config/scripts/lan-auth.sh " + args.join(" ");
   return device.exec(cmd);
   
 };
